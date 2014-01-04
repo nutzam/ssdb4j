@@ -62,4 +62,8 @@ public interface RawSSDB {
 	Respose qback(byte[] key);
 	Respose qpush(byte[] key, byte[] value);
 	Respose qpop(byte[] key);
+	
+	Respose flushdb(byte[] key);
+	Respose info();
+	Respose ping();
 }

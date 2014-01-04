@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.nutz.ssdb.spi.Cmd;
 import org.nutz.ssdb.spi.Respose;
 import org.nutz.ssdb.spi.SSDBException;
 import org.nutz.ssdb.spi.SSDBStream;
@@ -15,10 +16,10 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 
 	protected OutputStream out;
 
-	public synchronized Respose req(String cmd, byte[]... vals) {
+	public synchronized Respose req(Cmd cmd, byte[]... vals) {
 		beforeExec();
 		try {
-			write(cmd.getBytes());
+			write(cmd.bytes());
 			for (byte[] bs : vals) {
 				write(bs);
 			}

@@ -77,6 +77,10 @@ public interface SSDB {
 	Respose qpush(Object key, Object value);
 	Respose qpop(Object key);
 	
+	Respose flushdb(Object key);
+	Respose info();
+	Respose ping();
+	
 	//---------------
 	
 	/**还没实现啊,啊啊啊啊啊*/

@@ -309,6 +309,21 @@ public class SimpleClient implements SSDB {
 	public Respose multi_zdel(Object key, Object... zkeys) {
 		return raw.multi_zdel(bytes(key), bytess(zkeys));
 	}
+	
+	@Override
+	public Respose flushdb(Object key) {
+		return raw.flushdb(key == null ? null : bytes(key));
+	}
+	
+	@Override
+	public Respose info() {
+		return raw.info();
+	}
+	
+	@Override
+	public Respose ping() {
+		return raw.ping();
+	}
 
 	@Override
 	public SSDB batch() {
