@@ -1,7 +1,7 @@
-package org.nutz.ssdb.pool;
+package org.nutz.ssdb4j.pool;
 
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class SocketSSDBStreamPool extends GenericObjectPool<SSDBStream> {
 

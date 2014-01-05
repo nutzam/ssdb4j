@@ -1,14 +1,14 @@
-package org.nutz.ssdb.impl;
+package org.nutz.ssdb4j.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import org.nutz.ssdb.spi.Cmd;
-import org.nutz.ssdb.spi.Respose;
-import org.nutz.ssdb.spi.SSDBException;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.Cmd;
+import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDBException;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public abstract class AbstractIoSSDBStream implements SSDBStream {
 

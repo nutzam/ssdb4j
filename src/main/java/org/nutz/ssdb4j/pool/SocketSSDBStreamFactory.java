@@ -1,9 +1,9 @@
-package org.nutz.ssdb.pool;
+package org.nutz.ssdb4j.pool;
 
 import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.nutz.ssdb.impl.SocketSSDBStream;
-import org.nutz.ssdb.spi.Cmd;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.impl.SocketSSDBStream;
+import org.nutz.ssdb4j.spi.Cmd;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class SocketSSDBStreamFactory extends BasePoolableObjectFactory<SSDBStream> {
 

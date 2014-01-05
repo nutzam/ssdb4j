@@ -1,12 +1,12 @@
-package org.nutz.ssdb.impl;
+package org.nutz.ssdb4j.impl;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.nutz.ssdb.spi.Respose;
-import org.nutz.ssdb.spi.SSDB;
-import org.nutz.ssdb.spi.SSDBException;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDB;
+import org.nutz.ssdb4j.spi.SSDBException;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class SimpleClient implements SSDB {
 

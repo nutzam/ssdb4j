@@ -1,4 +1,4 @@
-package org.nutz.ssdb.spi;
+package org.nutz.ssdb4j.spi;
 
 /**
  * 封装与服务器通信的逻辑

@@ -1,4 +1,4 @@
-package org.nutz.ssdb.spi;
+package org.nutz.ssdb4j.spi;
 
 /**
  * SSDB for java 的标准接口

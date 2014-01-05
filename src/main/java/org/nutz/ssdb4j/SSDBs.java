@@ -1,11 +1,11 @@
 package org.nutz.ssdb4j;
 
 import org.apache.commons.pool.impl.GenericObjectPool.Config;
-import org.nutz.ssdb.impl.SimpleClient;
-import org.nutz.ssdb.pool.PoolSSDBStream;
-import org.nutz.ssdb.pool.SocketSSDBStreamPool;
-import org.nutz.ssdb.replication.ReplicationSSDMStream;
-import org.nutz.ssdb.spi.SSDB;
+import org.nutz.ssdb4j.impl.SimpleClient;
+import org.nutz.ssdb4j.pool.PoolSSDBStream;
+import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
+import org.nutz.ssdb4j.replication.ReplicationSSDMStream;
+import org.nutz.ssdb4j.spi.SSDB;
 
 public class SSDBs {
 	

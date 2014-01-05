@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.nutz.ssdb.spi.Respose;
-import org.nutz.ssdb.spi.SSDB;
 import org.nutz.ssdb4j.SSDBs;
+import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDB;
 
 public class SimpleClientTest {
 	

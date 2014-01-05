@@ -1,10 +1,10 @@
-package org.nutz.ssdb.pool;
+package org.nutz.ssdb4j.pool;
 
 import org.apache.commons.pool.ObjectPool;
-import org.nutz.ssdb.spi.Cmd;
-import org.nutz.ssdb.spi.Respose;
-import org.nutz.ssdb.spi.SSDBException;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.Cmd;
+import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDBException;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class PoolSSDBStream implements SSDBStream {
 	

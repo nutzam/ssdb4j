@@ -1,8 +1,8 @@
-package org.nutz.ssdb.replication;
+package org.nutz.ssdb4j.replication;
 
-import org.nutz.ssdb.spi.Cmd;
-import org.nutz.ssdb.spi.Respose;
-import org.nutz.ssdb.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.Cmd;
+import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class ReplicationSSDMStream implements SSDBStream {
 

@@ -1,4 +1,4 @@
-package org.nutz.ssdb.spi;
+package org.nutz.ssdb4j.spi;
 
 @SuppressWarnings("serial")
 public class SSDBException extends RuntimeException {
