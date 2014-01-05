@@ -3,6 +3,7 @@ package org.nutz.ssdb4j.replication;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Respose;
 import org.nutz.ssdb4j.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.SSDBStreamCallback;
 
 public class ReplicationSSDMStream implements SSDBStream {
 
@@ -22,8 +23,8 @@ public class ReplicationSSDMStream implements SSDBStream {
 	}
 
 	@Override
-	public SSDBStream doClone() {
-		return null;
+	public void callback(SSDBStreamCallback callback) {
+		master.callback(callback);
 	}
 
 }

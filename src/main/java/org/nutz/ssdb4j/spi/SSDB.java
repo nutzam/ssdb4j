@@ -1,5 +1,7 @@
 package org.nutz.ssdb4j.spi;
 
+import java.util.List;
+
 /**
  * SSDB for java 的标准接口
  * @author wendal(wendal1985@gmail.com)
@@ -87,5 +89,5 @@ public interface SSDB {
 	SSDB batch();
 	
 	/**还没实现啊,啊啊啊啊啊*/
-	Respose exec();
+	List<Respose> exec();
 }

@@ -67,7 +67,7 @@ public class Cmd {
 	public Cmd(String name, boolean slave, boolean partition) {
 		super();
 		this.name = name;
-		this.bytes = name.getBytes();
+		this.bytes = name.toLowerCase().getBytes();
 		this.slave = slave;
 		this.partition = partition;
 	}

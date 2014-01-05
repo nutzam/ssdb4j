@@ -2,6 +2,7 @@ package org.nutz.ssdb4j.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -29,6 +30,7 @@ public class SimpleClientTest {
 	public void test_set_get_del() {
 		Respose resp = ssdb.set("name", "wendal");
 		assertNotNull(resp);
+		System.out.println(resp.stat);
 		assertTrue(resp.ok());
 		assertEquals(1, resp.datas.size());
 		
@@ -117,8 +119,18 @@ public class SimpleClientTest {
 	}
 
 	@Test
-	public void testRscan() {
-		// TODO test_rscan
+	public void test_batch() {
+		SSDB ssdb = this.ssdb.batch();
+		for (int i = 0; i < 1000; i++) {
+			ssdb.set("aaa" + i, i);
+		}
+		System.out.println(System.currentTimeMillis());
+		List<Respose> resps = ssdb.exec();
+		System.out.println(System.currentTimeMillis());
+		assertEquals(1000, resps.size());
+		for (Respose resp : resps) {
+			assertTrue(resp.ok());
+		}
 	}
 
 	@Test

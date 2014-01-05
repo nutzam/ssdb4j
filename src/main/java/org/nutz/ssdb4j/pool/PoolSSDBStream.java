@@ -5,6 +5,7 @@ import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Respose;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
+import org.nutz.ssdb4j.spi.SSDBStreamCallback;
 
 public class PoolSSDBStream implements SSDBStream {
 	
@@ -27,8 +28,18 @@ public class PoolSSDBStream implements SSDBStream {
 		}
 	}
 
-	public SSDBStream doClone() {
-		return null; // 不支持克隆
+	@Override
+	public void callback(SSDBStreamCallback callback) {
+		try {
+			SSDBStream steam = pool.borrowObject();
+			try {
+				steam.callback(callback);
+			} finally {
+				pool.returnObject(steam);
+			}
+		} catch (Exception e) {
+			throw new SSDBException(e);
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.nutz.ssdb4j.impl;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,13 +12,17 @@ import org.nutz.ssdb4j.spi.SSDBStream;
 public class SimpleClient implements SSDB {
 
 	protected RawClient raw;
+	
+	protected SSDBStream stream;
 
 	public SimpleClient(SSDBStream stream) {
+		this.stream = stream;
 		this.raw = new RawClient(stream);
 	}
 
 	public SimpleClient(String host, int port, int timeout) {
-		this.raw = new RawClient(new SocketSSDBStream(host, port, timeout));
+		stream = new SocketSSDBStream(host, port, timeout);
+		this.raw = new RawClient(stream);
 	}
 
 	public Respose get(Object key) {
@@ -315,11 +320,11 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public SSDB batch() {
-		throw new SSDBException("not impl yet");
+		return new BatchClient(stream);
 	}
 
 	@Override
-	public Respose exec() {
+	public List<Respose> exec() {
 		throw new SSDBException("not batch!");
 	}
 }

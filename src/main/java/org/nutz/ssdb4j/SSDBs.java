@@ -1,11 +1,20 @@
 package org.nutz.ssdb4j;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+
 import org.apache.commons.pool.impl.GenericObjectPool.Config;
+import org.nutz.ssdb4j.impl.RawClient;
 import org.nutz.ssdb4j.impl.SimpleClient;
 import org.nutz.ssdb4j.pool.PoolSSDBStream;
 import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
 import org.nutz.ssdb4j.replication.ReplicationSSDMStream;
+import org.nutz.ssdb4j.spi.Cmd;
+import org.nutz.ssdb4j.spi.Respose;
 import org.nutz.ssdb4j.spi.SSDB;
+import org.nutz.ssdb4j.spi.SSDBException;
 
 public class SSDBs {
 	
@@ -60,6 +69,67 @@ public class SSDBs {
 		PoolSSDBStream master = new PoolSSDBStream(new SocketSSDBStreamPool(masterHost, masterPort, timeout, config));
 		PoolSSDBStream slave = new PoolSSDBStream(new SocketSSDBStreamPool(slaveHost, slavePort, timeout, config));
 		return new SimpleClient(new ReplicationSSDMStream(master, slave));
+	}
+	
+	public static byte[] readBlock(InputStream in) throws IOException {
+		int len = 0;
+		int d = in.read();
+		if (d == '\n')
+			return null;
+		else if (d >= '0' && d <= '9')
+			len = len * 10 + (d - '0');
+		else
+			throw new SSDBException("protocol error. unexpect byte=" + d);
+		while (true) {
+			d = in.read();
+			if (d >= '0' && d <= '9')
+				len = len * 10 + (d - '0');
+			else if (d == '\n')
+				break;
+			else
+				throw new SSDBException("protocol error. unexpect byte=" + d);
+		}
+		byte[] data = new byte[len];
+		if (len > 0)
+			in.read(data);
+		d = in.read();
+		if (d != '\n')
+			throw new SSDBException("protocol error. unexpect byte=" + d);
+		return data;
+	}
+	
+	public static void writeBlock(OutputStream out, byte[] data) throws IOException {
+		if (data == null)
+			data = RawClient.EMPTY_ARG;
+		out.write(Integer.toString(data.length).getBytes());
+		out.write('\n');
+		out.write(data);
+		out.write('\n');
+	}
+	
+	public static void sendCmd(OutputStream out, Cmd cmd, byte[] ... vals) throws IOException {
+		SSDBs.writeBlock(out, cmd.bytes());
+		for (byte[] bs : vals) {
+			SSDBs.writeBlock(out, bs);
+		}
+		out.write('\n');
+		out.flush();
+	}
+	
+	public static Respose readResp(InputStream in) throws IOException {
+		Respose resp = new Respose();
+		byte[] data = SSDBs.readBlock(in);
+		if (data == null)
+			throw new SSDBException("protocol error. unexpect \\n");
+		resp.stat = new String(data);
+		resp.datas = new ArrayList<byte[]>();
+		while (true) {
+			data = SSDBs.readBlock(in);
+			if (data == null)
+				break;
+			resp.datas.add(data);
+		}
+		return resp;
 	}
 	
 	public static String version() {

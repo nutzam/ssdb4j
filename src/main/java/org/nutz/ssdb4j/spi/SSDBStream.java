@@ -9,5 +9,5 @@ public interface SSDBStream {
 	
 	Respose req(Cmd cmd, byte[] ...vals);
 	
-	SSDBStream doClone();
+	void callback(SSDBStreamCallback callback);
 }
