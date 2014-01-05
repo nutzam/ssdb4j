@@ -8,12 +8,17 @@ import org.nutz.ssdb.replication.ReplicationSSDMStream;
 import org.nutz.ssdb.spi.SSDB;
 
 public class SSDBs {
+	
+
+	public static String DEFAULT_HOST = "127.0.0.1";
+	public static int DEFAULT_PORT = 8888;
+	public static int DEFAULT_TIMEOUT = 2000;
 
 	/**
 	 * 使用默认配置生成一个单连接的客户端
 	 */
 	public static final SSDB simple() {
-		return new SimpleClient();
+		return simple(DEFAULT_HOST, DEFAULT_PORT, DEFAULT_TIMEOUT);
 	}
 	
 	/**

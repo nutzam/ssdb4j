@@ -10,19 +10,7 @@ import org.nutz.ssdb.spi.SSDBStream;
 
 public class SimpleClient implements SSDB {
 
-	public static String DEFAULT_HOST = "127.0.0.1";
-	public static int DEFAULT_PORT = 8888;
-	public static int DEFAULT_TIMEOUT = 2000;
-	
 	protected RawClient raw;
-	
-	public SimpleClient() {
-		this(DEFAULT_HOST, DEFAULT_PORT, DEFAULT_TIMEOUT);
-	}
-
-	public SimpleClient(String host, int port) {
-		this(host, port, DEFAULT_TIMEOUT);
-	}
 
 	public SimpleClient(SSDBStream stream) {
 		this.raw = new RawClient(stream);
@@ -40,7 +28,7 @@ public class SimpleClient implements SSDB {
 	public Respose set(Object key, Object val) {
 		return raw.set(bytes(key), bytes(val));
 	}
-	
+
 	@Override
 	public Respose setx(Object key, Object val, int ttl) {
 		return raw.setx(bytes(key), bytes(val), ttl);
@@ -55,12 +43,12 @@ public class SimpleClient implements SSDB {
 	public Respose incr(Object key, int val) {
 		return raw.incr(bytes(key), val);
 	}
-	
+
 	@Override
 	public Respose exists(Object key) {
 		return raw.exists(bytes(key));
 	}
-	
+
 	@Override
 	public Respose keys(Object start, Object end, int limit) {
 		return raw.keys(bytes(start), bytes(end), limit);
@@ -70,7 +58,7 @@ public class SimpleClient implements SSDB {
 	public Respose multi_set(Object... pairs) {
 		return raw.multi_set(bytess(pairs));
 	}
-	
+
 	@Override
 	public Respose multi_get(Object... keys) {
 		return raw.multi_get(bytess(keys));
@@ -199,34 +187,34 @@ public class SimpleClient implements SSDB {
 	public Respose qpop(Object key) {
 		return raw.qpop(bytes(key));
 	}
-	
+
 	protected byte[] bytes(Object obj) {
 		if (obj == null)
 			throw new IllegalArgumentException("arg is null");
 		if (obj instanceof byte[])
-			return (byte[])obj;
+			return (byte[]) obj;
 		// TODO 支持输入流作为参数
 		// TODO 支持字符集设置
 		return obj.toString().getBytes();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	// TODO 做成插件形式,可配置
-	protected byte[][] bytess(Object ... objs) {
+	protected byte[][] bytess(Object... objs) {
 		if (objs == null)
 			throw new IllegalArgumentException("arg is null");
 		if (objs instanceof byte[][])
-			return (byte[][])objs;
+			return (byte[][]) objs;
 		if (objs.length == 1) {
 			Object arg = objs[0];
 			if (arg instanceof Map) {
-				Map<Object, Object> map = (Map<Object, Object>)arg;
+				Map<Object, Object> map = (Map<Object, Object>) arg;
 				byte[][] args = new byte[map.size() * 2][];
 				int i = 0;
 				for (Entry<Object, Object> en : map.entrySet()) {
 					args[i] = bytes(en.getKey());
-					args[i+1] = bytes(en.getValue());
-					i +=2;
+					args[i + 1] = bytes(en.getValue());
+					i += 2;
 				}
 				return args;
 			}
@@ -309,17 +297,17 @@ public class SimpleClient implements SSDB {
 	public Respose multi_zdel(Object key, Object... zkeys) {
 		return raw.multi_zdel(bytes(key), bytess(zkeys));
 	}
-	
+
 	@Override
 	public Respose flushdb(Object key) {
 		return raw.flushdb(key == null ? null : bytes(key));
 	}
-	
+
 	@Override
 	public Respose info() {
 		return raw.info();
 	}
-	
+
 	@Override
 	public Respose ping() {
 		return raw.ping();

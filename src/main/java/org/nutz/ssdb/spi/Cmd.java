@@ -10,7 +10,7 @@ public class Cmd {
 	public static final Cmd DEL = new Cmd("DEL", false, true);
 	public static final Cmd INCR = new Cmd("INCR", false, true);
 	public static final Cmd EXISTS = new Cmd("EXISTS", true, true);
-	public static final Cmd KEYS = new Cmd("KEYS", true, true);
+	public static final Cmd KEYS = new Cmd("KEYS", true, false);
 	public static final Cmd MULTI_SET = new Cmd("MULTI_SET", false, false);
 	public static final Cmd MULTI_GET = new Cmd("MULTI_GET", true, false);
 	public static final Cmd MULTI_DEL = new Cmd("MULTI_DEL", false, false);
@@ -55,8 +55,8 @@ public class Cmd {
 	public static final Cmd FLUSHDB = new Cmd("FLUSHDB", false, true);
 	public static final Cmd INFO = new Cmd("INFO", false, true);
 	public static final Cmd PING = new Cmd("PING", false, true);
-	public static final Cmd BATCH = new Cmd("BATCH", false, true);
-	public static final Cmd EXEC = new Cmd("EXEC", false, true);
+	//public static final Cmd BATCH = new Cmd("BATCH", false, true);
+	//public static final Cmd EXEC = new Cmd("EXEC", false, true);
 
 
 	protected String name;
@@ -88,7 +88,8 @@ public class Cmd {
 		for (Method method :SSDB.class.getMethods()) {
 			String cmdName = method.getName().toUpperCase();
 			boolean slave = cmdName.contains("GET") || cmdName.contains("SIZE") || cmdName.contains("EXISTS") || cmdName.contains("KEYS");
-			boolean partition = cmdName.startsWith("Z") || cmdName.startsWith("H") || (!cmdName.contains("MULTI") && !cmdName.contains("SCAN"));
+			boolean partition = cmdName.startsWith("Z") || cmdName.startsWith("H") || 
+					(!cmdName.contains("MULTI") && !cmdName.contains("SCAN") && !cmdName.contains("KEYS"));
 			System.out.printf("\tpublic static final Cmd %s = new Cmd(\"%s\", %s, %s);\n", cmdName, cmdName, slave, partition);
 		}
 	}
