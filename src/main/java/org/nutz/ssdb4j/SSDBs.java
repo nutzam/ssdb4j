@@ -3,10 +3,9 @@ package org.nutz.ssdb4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.nio.charset.Charset;
 
 import org.apache.commons.pool.impl.GenericObjectPool.Config;
-import org.nutz.ssdb4j.impl.RawClient;
 import org.nutz.ssdb4j.impl.SimpleClient;
 import org.nutz.ssdb4j.pool.PoolSSDBStream;
 import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
@@ -16,12 +15,24 @@ import org.nutz.ssdb4j.spi.Respose;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 
+/**
+ * 封装最常用的SSDB创建方法和协议实现
+ * <p/>数据流: 用户代码-->SSDB接口(及ObjectConv接口)-->SSDBStream接口-->服务器
+ * @author wendal(wendal1985@gmail.com)
+ *
+ */
 public class SSDBs {
 	
-
+	/**默认主机127.0.0.1*/
 	public static String DEFAULT_HOST = "127.0.0.1";
+	/**默认端口8888*/
 	public static int DEFAULT_PORT = 8888;
+	/**默认连接和读写超时2s*/
 	public static int DEFAULT_TIMEOUT = 2000;
+	
+	public static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+	
+	public static final byte[] EMPTY_ARG = new byte[0];
 
 	/**
 	 * 使用默认配置生成一个单连接的客户端
@@ -71,6 +82,15 @@ public class SSDBs {
 		return new SimpleClient(new ReplicationSSDMStream(master, slave));
 	}
 	
+	/**
+	 * 
+	 * 从流中读取一个块(ssdb通信协议中定义的Block)
+	 * <p/><b>如果本方法抛异常,应立即关闭输入流</b>
+	 * @param in 输入流
+	 * @return 如果首字节为回车(\n),则返回null,否则返回Block的data部分
+	 * @throws IOException   常规的IO异常
+	 * @throws SSDBException 读取到非预期值的时候抛错协议错误
+	 */
 	public static byte[] readBlock(InputStream in) throws IOException {
 		int len = 0;
 		int d = in.read();
@@ -98,15 +118,30 @@ public class SSDBs {
 		return data;
 	}
 	
+	/**
+	 * 按ssdb的通信协议写入一个Block
+	 * <p/><b>如果本方法抛异常,应立即关闭输出流</b>
+	 * @param out 输出流
+	 * @param data 需要写入数据块, 如果为null,则转为长度为0的byte[]
+	 * @throws IOException 常规IO异常
+	 */
 	public static void writeBlock(OutputStream out, byte[] data) throws IOException {
 		if (data == null)
-			data = RawClient.EMPTY_ARG;
+			data = EMPTY_ARG;
 		out.write(Integer.toString(data.length).getBytes());
 		out.write('\n');
 		out.write(data);
 		out.write('\n');
 	}
 	
+	/**
+	 * 向输出流发送一个命令及其参数
+	 * <p/><b>如果本方法抛异常,应立即关闭输出流</b>
+	 * @param out 输出流
+	 * @param cmd 命令类型
+	 * @param vals 命令的参数
+	 * @throws IOException 常规IO异常
+	 */
 	public static void sendCmd(OutputStream out, Cmd cmd, byte[] ... vals) throws IOException {
 		SSDBs.writeBlock(out, cmd.bytes());
 		for (byte[] bs : vals) {
@@ -116,13 +151,20 @@ public class SSDBs {
 		out.flush();
 	}
 	
+	/**
+	 * 从输入流读取一个响应
+	 * <p/><b>如果本方法抛异常,应立即关闭输入流</b>
+	 * @param in 输入流
+	 * @return ssdb标准响应
+	 * @throws IOException 常规IO异常
+	 * @throws SSDBException 读取到非预期值的时候抛错协议错误
+	 */
 	public static Respose readResp(InputStream in) throws IOException {
 		Respose resp = new Respose();
 		byte[] data = SSDBs.readBlock(in);
 		if (data == null)
 			throw new SSDBException("protocol error. unexpect \\n");
 		resp.stat = new String(data);
-		resp.datas = new ArrayList<byte[]>();
 		while (true) {
 			data = SSDBs.readBlock(in);
 			if (data == null)
@@ -132,7 +174,11 @@ public class SSDBs {
 		return resp;
 	}
 	
+	/**
+	 * 版本号
+	 * @return 版本号
+	 */
 	public static String version() {
-		return "7.5.2"; // 20130104 by wendal
+		return "7.5.3"; // 20130105 by wendal
 	}
 }

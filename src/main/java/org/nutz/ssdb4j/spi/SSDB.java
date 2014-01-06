@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * SSDB for java 的标准接口
  * @author wendal(wendal1985@gmail.com)
- * <p/> ssdb官方暂未提供具体方法的时间复杂度数据.
  */
 public interface SSDB {
 
@@ -85,9 +84,16 @@ public interface SSDB {
 	
 	//---------------
 	
-	/**还没实现啊,啊啊啊啊啊*/
-	SSDB batch();
+	/**
+	 * 批量执行,注意: 返回值是新的SSDB实例!!
+	 * <p/>由于当前版本的服务器不支持pipe,所以均为客户端缓存,务必留意内存问题
+	 * 
+	 */
+	SSDB batch(); // TODO 支持命令合并机制
 	
-	/**还没实现啊,啊啊啊啊啊*/
+	/**
+	 * 将缓存中的命令发送到服务器并依次获取返回值
+	 * @return 一系列响应
+	 */
 	List<Respose> exec();
 }

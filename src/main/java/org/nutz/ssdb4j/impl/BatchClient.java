@@ -14,14 +14,11 @@ import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
 import org.nutz.ssdb4j.spi.SSDBStreamCallback;
 
-public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamCallback, Runnable {
+public class BatchClient extends SimpleClient implements SSDBStreamCallback, Runnable {
 
-	protected SSDBStream proxyStream;
-	
 	protected static Respose OK = new Respose();
 	static {
 		OK.stat = "ok";
-		OK.datas = new ArrayList<byte[]>();
 	}
 	
 	protected List<_Req> reqs;
@@ -35,14 +32,12 @@ public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamC
 	protected List<Respose> resps;
 	
 	public BatchClient(SSDBStream stream) {
-		super(null);
-		this.proxyStream = stream;
-		this.stream = this;
-		this.raw = new RawClient(this);
+		super(stream);
 		this.resps = new ArrayList<Respose>();
 		this.reqs = new ArrayList<BatchClient._Req>();
 	}
-	
+
+	@Override
 	public Respose req(Cmd cmd, byte[]... vals) {
 		if (reqs == null)
 			throw new SSDBException("this BatchClient is invaild!");
@@ -51,13 +46,13 @@ public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamC
 	}
 	
 	@Override
-	public List<Respose> exec() {
-		proxyStream.callback(this);
+	public synchronized List<Respose> exec() {
+		if (reqs == null)
+			throw new SSDBException("this BatchClient is invaild!");
+		count = reqs.size();
+		stream.callback(this);
 		List<Respose> resps = this.resps;
 		this.resps = null;
-		this.proxyStream = null;
-		this.reqs = null;
-		respLock = null;
 		return resps;
 	}
 	
@@ -65,7 +60,6 @@ public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamC
 	public void invoke(InputStream in, OutputStream out) {
 		_in = in;
 		new Thread(this).start();
-		count = reqs.size();
 		try {
 			for (_Req req : reqs) {
 				SSDBs.writeBlock(out, req.cmd.bytes());
@@ -80,6 +74,7 @@ public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamC
 				respLock.wait();
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new SSDBException(e);
 		}
 	}
@@ -92,21 +87,18 @@ public class BatchClient extends SimpleClient implements SSDBStream, SSDBStreamC
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			_in = null;
+			synchronized (respLock) {
+				respLock.notifyAll();
+			}
 		}
-		_in = null;
-		synchronized (respLock) {
-			respLock.notifyAll();
-		}
+		
 	}
 	
 	@Override
 	public SSDB batch() {
 		throw new SSDBException("aready in batch mode, not support for batch again");
-	}
-
-	@Override
-	public void callback(SSDBStreamCallback callback) {
-		throw new SSDBException("not support for callback");
 	}
 	
 	static class _Req {

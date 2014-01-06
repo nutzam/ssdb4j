@@ -22,6 +22,6 @@ public class SocketSSDBStreamFactory extends BasePoolableObjectFactory<SSDBStrea
 	}
 
 	public boolean validateObject(SSDBStream stream) {
-		return stream.req(Cmd.PING).ok();
+		return stream.req(Cmd.ping).ok();
 	}
 }

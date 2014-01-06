@@ -7,11 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.nutz.ssdb4j.SSDBs;
+
+/**
+ * 标准响应,这个类由SSDBStream实例控制生成过程
+ * @author wendal(wendal1985@gmail.com)
+ *
+ */
 public class Respose {
 
 	public String stat;
-	public ArrayList<byte[]> datas;
-	public Charset charset;
+	public ArrayList<byte[]> datas = new ArrayList<byte[]>(2);
+	public Charset charset = SSDBs.DEFAULT_CHARSET;
 	
 	public boolean ok() {
 		return "ok".equals(stat);
@@ -22,8 +29,6 @@ public class Respose {
 	}
 
 	protected String _string(byte[] data) {
-		if (charset == null)
-			charset = Charset.forName("UTF-8");
 		return new String(data, charset);
 	}
 	

@@ -167,8 +167,12 @@ public class SimpleClientTest {
 	}
 
 	@Test
-	public void testZset() {
-		fail("Not yet implemented");
+	public void test_info() {
+		Respose resp = ssdb.info();
+		assertTrue(resp.ok());
+		for (String str : resp.listString()) {
+			System.out.println(str);
+		}
 	}
 
 	@Test

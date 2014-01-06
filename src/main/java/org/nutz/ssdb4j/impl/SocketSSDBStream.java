@@ -7,6 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.SSDBException;
 
 public class SocketSSDBStream extends AbstractIoSSDBStream {
 
@@ -30,14 +31,14 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 				this.in = new BufferedInputStream(socket.getInputStream());
 				this.out = new BufferedOutputStream(socket.getOutputStream());
 			} catch (IOException e) {
-				throw new RuntimeException(e);
+				throw new SSDBException(e);
 			}
 		}
 	}
 
 	@Override
 	protected Respose whenError(Throwable e) {
-		if (socket.isConnected())
+		if (!socket.isClosed())
 			try {
 				socket.close();
 			} catch (IOException e1) {
@@ -47,7 +48,7 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 	}
 
 	protected void finalize() throws Throwable {
-		if (socket != null)
+		if (socket != null && !socket.isClosed())
 			socket.close();
 	}
 }
