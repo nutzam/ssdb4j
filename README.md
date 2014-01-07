@@ -8,6 +8,10 @@ SSDB官网
 
 https://github.com/ideawu/ssdb
 
+License
+-------------------
+BSD 3-Clause License
+
 maven
 -----------------
 
