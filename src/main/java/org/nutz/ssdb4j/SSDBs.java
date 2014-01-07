@@ -179,6 +179,6 @@ public class SSDBs {
 	 * @return 版本号
 	 */
 	public static String version() {
-		return "8.0.1";
+		return "8.0.2";
 	}
 }

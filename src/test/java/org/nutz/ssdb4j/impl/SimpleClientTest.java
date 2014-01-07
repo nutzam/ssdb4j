@@ -17,7 +17,7 @@ public class SimpleClientTest {
 
 	@Before
 	public void init() {
-		ssdb = SSDBs.simple();
+		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
 	}
 	
 	@Test

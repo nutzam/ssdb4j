@@ -20,6 +20,12 @@ public class Respose {
 	public ArrayList<byte[]> datas = new ArrayList<byte[]>(2);
 	public Charset charset = SSDBs.DEFAULT_CHARSET;
 	
+	public Respose check() {
+		if (!ok())
+			throw new SSDBException("stat=" + stat);
+		return this;
+	}
+	
 	public boolean ok() {
 		return "ok".equals(stat);
 	}
