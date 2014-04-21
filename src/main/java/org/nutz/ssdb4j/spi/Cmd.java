@@ -59,6 +59,13 @@ public class Cmd {
 //	public static final Cmd exec = new Cmd("exec", false, true);
 
 
+	public static final Cmd setnx = new Cmd("setnx", false, true);
+	public static final Cmd getset = new Cmd("getset", false, true);
+	public static final Cmd qslice = new Cmd("qslice", true, true);
+	public static final Cmd qget = new Cmd("qget", true, true);
+	public static final Cmd zcount = new Cmd("zcount", true, true);
+	public static final Cmd zsum = new Cmd("zsum", true, true);
+	public static final Cmd zavg = new Cmd("zavg", true, true);
 
 	protected String name;
 	protected byte[] bytes;

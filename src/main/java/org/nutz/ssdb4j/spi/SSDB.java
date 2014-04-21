@@ -96,4 +96,28 @@ public interface SSDB {
 	 * @return 一系列响应
 	 */
 	List<Respose> exec();
+	
+
+	/*=================================================================*/
+	/*==================add at 1.6.8.5=================================*/
+	/*=================================================================*/
+
+	/**如果key不存在,就执行set操作*/
+	Respose setnx(Object key, Object val);
+	/**取值并更新值*/
+	Respose getset(Object key, Object val);
+	
+	Respose qslice(Object key, int start, int end);
+	
+	Respose qget(Object key, int index);
+	
+	/*=================================================================*/
+	/*==================add at 1.6.8.6=================================*/
+	/*=================================================================*/
+	
+	Respose zcount(Object key, int start, int end);
+	Respose zsum(Object key, int start, int end);
+	Respose zavg(Object key, int start, int end);
+	//Respose zRemRangeByScore();
+	//Respose zRemRangeByRank();
 }

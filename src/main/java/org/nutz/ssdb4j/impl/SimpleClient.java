@@ -323,4 +323,42 @@ public class SimpleClient implements SSDB {
 		return req(Cmd.ping);
 	}
 	
+	//------------------------------------------
+
+	@Override
+	public Respose setnx(Object key, Object val) {
+		return req(Cmd.setnx, bytes(key), bytes(val));
+	}
+
+	@Override
+	public Respose getset(Object key, Object val) {
+		return req(Cmd.getset, bytes(key), bytes(val));
+	}
+
+	@Override
+	public Respose qslice(Object key, int start, int end) {
+		return req(Cmd.qslice, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+	}
+
+	@Override
+	public Respose qget(Object key, int index) {
+		return req(Cmd.qget, bytes(key), (""+index).getBytes());
+	}
+
+	@Override
+	public Respose zcount(Object key, int start, int end) {
+		return req(Cmd.zcount, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+	}
+
+	@Override
+	public Respose zsum(Object key, int start, int end) {
+		return req(Cmd.zsum, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+	}
+
+	@Override
+	public Respose zavg(Object key, int start, int end) {
+		return req(Cmd.zavg, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+	}
+	
+	
 }
