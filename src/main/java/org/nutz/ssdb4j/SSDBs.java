@@ -59,8 +59,10 @@ public class SSDBs {
 	 * @param config 连接池配置信息,如果为空,则使用默认值
 	 */
 	public static final SSDB pool(String host, int port, int timeout, Config config) {
-		if (config == null)
+		if (config == null) {
 			config = new Config();
+			config.testWhileIdle = true;
+		}
 		return new SimpleClient(new PoolSSDBStream(new SocketSSDBStreamPool(host, port, timeout, config)));
 	}
 	
@@ -75,8 +77,10 @@ public class SSDBs {
 	 * @param config     连接池配置信息,如果为空,则使用默认值
 	 */
 	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Config config) {
-		if (config == null)
+		if (config == null) {
 			config = new Config();
+			config.testWhileIdle = true;
+		}
 		PoolSSDBStream master = new PoolSSDBStream(new SocketSSDBStreamPool(masterHost, masterPort, timeout, config));
 		PoolSSDBStream slave = new PoolSSDBStream(new SocketSSDBStreamPool(slaveHost, slavePort, timeout, config));
 		return new SimpleClient(new ReplicationSSDMStream(master, slave));
@@ -179,6 +183,6 @@ public class SSDBs {
 	 * @return 版本号
 	 */
 	public static String version() {
-		return "8.0.2";
+		return "8.1";
 	}
 }

@@ -51,4 +51,9 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 		if (socket != null && !socket.isClosed())
 			socket.close();
 	}
+	
+	@Override
+	public void close() throws Exception {
+		socket.close();
+	}
 }

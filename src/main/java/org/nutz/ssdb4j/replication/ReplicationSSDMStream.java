@@ -27,4 +27,7 @@ public class ReplicationSSDMStream implements SSDBStream {
 		master.callback(callback);
 	}
 
+	@Override
+	public void close() throws Exception {
+	}
 }

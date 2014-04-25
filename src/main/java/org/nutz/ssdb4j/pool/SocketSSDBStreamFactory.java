@@ -22,6 +22,16 @@ public class SocketSSDBStreamFactory extends BasePoolableObjectFactory<SSDBStrea
 	}
 
 	public boolean validateObject(SSDBStream stream) {
-		return stream.req(Cmd.ping).ok();
+		try {
+			return stream.req(Cmd.ping).ok();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public void destroyObject(SSDBStream obj) throws Exception {
+		obj.close();
 	}
 }

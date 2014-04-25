@@ -10,4 +10,6 @@ public interface SSDBStream {
 	Respose req(Cmd cmd, byte[] ...vals);
 	
 	void callback(SSDBStreamCallback callback);
+	
+	void close() throws Exception;
 }

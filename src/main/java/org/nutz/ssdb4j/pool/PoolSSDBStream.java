@@ -20,8 +20,16 @@ public class PoolSSDBStream implements SSDBStream {
 			SSDBStream steam = pool.borrowObject();
 			try {
 				return steam.req(cmd, vals);
-			} finally {
-				pool.returnObject(steam);
+			} catch (Exception e) {
+				try {
+					steam.close();
+				} catch (Throwable e2) {
+				}
+				steam = null;
+				throw e;
+			}finally {
+				if (steam != null)
+					pool.returnObject(steam);
 			}
 		} catch (Exception e) {
 			throw new SSDBException(e);
@@ -42,4 +50,7 @@ public class PoolSSDBStream implements SSDBStream {
 		}
 	}
 
+	@Override
+	public void close() throws Exception {
+	}
 }

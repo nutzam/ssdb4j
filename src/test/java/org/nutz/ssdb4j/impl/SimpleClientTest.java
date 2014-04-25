@@ -17,8 +17,9 @@ public class SimpleClientTest {
 
 	@Before
 	public void init() {
-//		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
-		ssdb = SSDBs.pool("nutz.cn", 8888, 2000, null);
+		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
+//		ssdb = SSDBs.pool("nutzam.com", 8888, 2000, null);
+//		ssdb = SSDBs.pool("nutz.cn", 8888, 2000, null);
 	}
 	
 	@Test
@@ -243,7 +244,14 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQpush() {
-		fail("Not yet implemented");
+		Respose resp = ssdb.qpush("q1", 123);
+		assertTrue(resp.ok());
+		System.out.println(resp.asInt());
+		resp = ssdb.qpush("q1", 4);
+		resp = ssdb.qpush("q1", 7);
+		resp = ssdb.qpush("q1", 2);
+		resp = ssdb.qpush("q1", 1);
+		System.out.println(resp.asInt());
 	}
 
 	@Test
@@ -271,5 +279,6 @@ public class SimpleClientTest {
 		resp = ssdb.setnx("abc2", "2");
 		assertTrue(resp.ok());
 		assertEquals(1, resp.asInt());
+		System.out.println((char)85);
 	}
 }
