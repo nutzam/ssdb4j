@@ -17,7 +17,7 @@ import org.nutz.ssdb4j.spi.SSDBException;
 
 /**
  * 封装最常用的SSDB创建方法和协议实现
- * <p/>数据流: 用户代码-->SSDB接口(及ObjectConv接口)-->SSDBStream接口-->服务器
+ * <p></p>数据流: 用户代码--SSDB接口(及ObjectConv接口)--SSDBStream接口--服务器
  * @author wendal(wendal1985@gmail.com)
  *
  */
@@ -89,7 +89,7 @@ public class SSDBs {
 	/**
 	 * 
 	 * 从流中读取一个块(ssdb通信协议中定义的Block)
-	 * <p/><b>如果本方法抛异常,应立即关闭输入流</b>
+	 * <p></p><b>如果本方法抛异常,应立即关闭输入流</b>
 	 * @param in 输入流
 	 * @return 如果首字节为回车(\n),则返回null,否则返回Block的data部分
 	 * @throws IOException   常规的IO异常
@@ -124,7 +124,7 @@ public class SSDBs {
 	
 	/**
 	 * 按ssdb的通信协议写入一个Block
-	 * <p/><b>如果本方法抛异常,应立即关闭输出流</b>
+	 * <p></p><b>如果本方法抛异常,应立即关闭输出流</b>
 	 * @param out 输出流
 	 * @param data 需要写入数据块, 如果为null,则转为长度为0的byte[]
 	 * @throws IOException 常规IO异常
@@ -140,7 +140,7 @@ public class SSDBs {
 	
 	/**
 	 * 向输出流发送一个命令及其参数
-	 * <p/><b>如果本方法抛异常,应立即关闭输出流</b>
+	 * <p></p><b>如果本方法抛异常,应立即关闭输出流</b>
 	 * @param out 输出流
 	 * @param cmd 命令类型
 	 * @param vals 命令的参数
@@ -157,7 +157,7 @@ public class SSDBs {
 	
 	/**
 	 * 从输入流读取一个响应
-	 * <p/><b>如果本方法抛异常,应立即关闭输入流</b>
+	 * <p></p><b>如果本方法抛异常,应立即关闭输入流</b>
 	 * @param in 输入流
 	 * @return ssdb标准响应
 	 * @throws IOException 常规IO异常
