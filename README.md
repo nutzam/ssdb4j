@@ -1,7 +1,7 @@
 ssdb4j
 ======
 
-又一个SSDB的Java驱动
+又一个SSDB的Java驱动. 连接池,主从,都有了
 
 SSDB官网
 -----------------
@@ -19,7 +19,7 @@ maven
 <dependency>
     <groupId>org.nutz</groupId>
     <artifactId>ssdb4j</artifactId>
-    <version>8.0.2</version>
+    <version>8.1</version>
 </dependency>
 ```
 
