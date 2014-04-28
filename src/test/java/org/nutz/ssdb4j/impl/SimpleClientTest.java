@@ -20,6 +20,7 @@ public class SimpleClientTest {
 		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutzam.com", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutz.cn", 8888, 2000, null);
+		ssdb.flushdb("all");
 	}
 	
 	@Test
@@ -179,57 +180,118 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZget() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		Respose resp = ssdb.zget("wendal", "net");
+		assertTrue(resp.ok());
+		assertEquals(1, resp.asInt());
 	}
 
 	@Test
 	public void testZdel() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		Respose resp = ssdb.zdel("wendal", "net");
+		assertTrue(resp.notFound());
 	}
 
 	@Test
 	public void testZincr() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		Respose resp = ssdb.zincr("wendal", "net", 10);
+		assertTrue(resp.ok());
+		assertEquals(11, resp.asInt());
 	}
 
 	@Test
 	public void testZsize() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		ssdb.zset("wendal", "net2", 1);
+		ssdb.zset("wendal", "ne3", 1);
+		ssdb.zset("wendal", "ne8", 1);
+		Respose resp = ssdb.zsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(4, resp.asInt());
 	}
 
 	@Test
 	public void testZrank() {
-		fail("Not yet implemented");
+		for (int i = 0; i < 100; i++) {
+			ssdb.zset("wendal", "net-"+i, i + 100);
+		}
+		Respose resp = ssdb.zsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(100, resp.asInt());
+		resp = ssdb.zrank("wendal", "net-33");
+		assertTrue(resp.ok());
+		assertEquals(33, resp.asInt());
 	}
 
 	@Test
 	public void testZrrank() {
-		fail("Not yet implemented");
+		for (int i = 0; i < 100; i++) {
+			ssdb.zset("wendal", "net-"+i, i + 100);
+		}
+		Respose resp = ssdb.zsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(100, resp.asInt());
+		resp = ssdb.zrrank("wendal", "net-33");
+		assertTrue(resp.ok());
+		assertEquals(100 - 33 - 1, resp.asInt());
 	}
 
 	@Test
 	public void testZrange() {
-		fail("Not yet implemented");
+		for (int i = 0; i < 100; i++) {
+			ssdb.zset("wendal", "net-"+i, i + 100);
+		}
+		Respose resp = ssdb.zsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(100, resp.asInt());
+		resp = ssdb.zrange("wendal", 20, 10);
+		assertTrue(resp.ok());
+		assertEquals(10, resp.map().size());
 	}
 
 	@Test
 	public void testZrrange() {
-		fail("Not yet implemented");
+		for (int i = 0; i < 100; i++) {
+			ssdb.zset("wendal", "net-"+i, i + 100);
+		}
+		Respose resp = ssdb.zsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(100, resp.asInt());
+		resp = ssdb.zrrange("wendal", 20, 10);
+		assertTrue(resp.ok());
+		assertEquals(10, resp.map().size());
 	}
 
 	@Test
 	public void testZscan() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		ssdb.zset("wendal", "net2", 3);
+		ssdb.zset("wendal", "net3", 4);
+		Respose resp = ssdb.zscan("wendal", "", 1, 2, 2);
+		assertTrue(resp.ok());
+		assertEquals(1, resp.map().size());
 	}
 
 	@Test
 	public void testZrscan() {
-		fail("Not yet implemented");
+		ssdb.zset("wendal", "net", 1);
+		ssdb.zset("wendal", "net2", 3);
+		ssdb.zset("wendal", "net3", 4);
+		Respose resp = ssdb.zrscan("wendal", "", 7, 1, 2);
+		assertTrue(resp.ok());
+		assertEquals(2, resp.map().size());
 	}
 
 	@Test
 	public void testQsize() {
-		fail("Not yet implemented");
+		Respose resp = ssdb.qpush("qwendal", 1);
+		assertTrue(resp.ok());
+		assertEquals(1, resp.asInt());
+		resp = ssdb.qsize("wendal");
+		assertTrue(resp.ok());
+		assertEquals(1, resp.asInt());
 	}
 
 	@Test
@@ -281,4 +343,18 @@ public class SimpleClientTest {
 		assertEquals(1, resp.asInt());
 		System.out.println((char)85);
 	}
+	
+//	public static void main(String[] args) {
+//		Method[] mys = SSDB.class.getMethods();
+//		for (Method method : mys) {
+//			for (Method originMethod : com.udpwork.ssdb.SSDB.class.getMethods()) {
+//				if (originMethod.getName().equals(method.getName())) {
+//					if (method.getParameterTypes().length != originMethod.getParameterTypes().length) {
+//						System.out.println(">> " + method.getName() + "   " + method.getParameterTypes().length + " <> " + originMethod.getParameterTypes().length);
+//					}
+//					//System.out.println(method.getParameterTypes().length + "_" + originMethod.getParameterTypes().length);
+//				}
+//			}
+//		}
+//	}
 }

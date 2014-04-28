@@ -50,19 +50,20 @@ public interface SSDB {
 	Respose multi_hdel(Object key, Object ...hkeys);
 	//-----
 	
-	Respose zset(Object key, Object zkey, double score);
+	Respose zset(Object key, Object zkey, int score);
 	Respose zget(Object key, Object zkey);
 	Respose zdel(Object key, Object zkey);
 	Respose zincr(Object key, Object zkey, int val);
+	//Respose zlist(Object zkey_start, Object zkey_end, int limit);
 	Respose zsize(Object key);
 	Respose zrank(Object key, Object zkey);
 	Respose zrrank(Object key, Object zkey);
 	Respose zexists(Object key, Object zkey);
 	Respose zclear(Object key);
 	
-	Respose zkeys(Object key, Object start, Object end,int limit);
-	Respose zscan(Object key, Object start, Object end,int limit);
-	Respose zrscan(Object key, Object start, Object end,int limit);
+	Respose zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Respose zscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Respose zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
 	
 	Respose zrange(Object key, int offset, int limit);
 	Respose zrrange(Object key, int offset, int limit);
