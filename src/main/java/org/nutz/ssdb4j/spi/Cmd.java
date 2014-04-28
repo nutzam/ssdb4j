@@ -35,6 +35,7 @@ public class Cmd {
 	public static final Cmd zdel = new Cmd("zdel", false, true);
 	public static final Cmd zincr = new Cmd("zincr", false, true);
 	public static final Cmd zsize = new Cmd("zsize", true, true);
+	public static final Cmd zlist = new Cmd("zlist", true, true);
 	public static final Cmd zrank = new Cmd("zrank", false, true);
 	public static final Cmd zrrank = new Cmd("zrrank", false, true);
 	public static final Cmd zexists = new Cmd("zexists", true, true);
@@ -52,6 +53,8 @@ public class Cmd {
 	public static final Cmd qback = new Cmd("qback", false, true);
 	public static final Cmd qpush = new Cmd("qpush", false, true);
 	public static final Cmd qpop = new Cmd("qpop", false, true);
+	public static final Cmd qlist = new Cmd("qlist", false, true);
+	public static final Cmd qclear = new Cmd("qclear", false, true);
 	public static final Cmd flushdb = new Cmd("flushdb", false, true);
 	public static final Cmd info = new Cmd("info", false, true);
 	public static final Cmd ping = new Cmd("ping", false, true);

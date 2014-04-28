@@ -20,7 +20,8 @@ public class SimpleClientTest {
 		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutzam.com", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutz.cn", 8888, 2000, null);
-		ssdb.flushdb("all");
+		Respose resp = ssdb.flushdb("");
+		assertTrue(resp.ok());
 	}
 	
 	@Test
@@ -190,6 +191,8 @@ public class SimpleClientTest {
 	public void testZdel() {
 		ssdb.zset("wendal", "net", 1);
 		Respose resp = ssdb.zdel("wendal", "net");
+		assertTrue(resp.ok());
+		resp = ssdb.zget("wendal", "net");
 		assertTrue(resp.notFound());
 	}
 
@@ -289,46 +292,36 @@ public class SimpleClientTest {
 		Respose resp = ssdb.qpush("qwendal", 1);
 		assertTrue(resp.ok());
 		assertEquals(1, resp.asInt());
-		resp = ssdb.qsize("wendal");
+		resp = ssdb.qsize("qwendal");
 		assertTrue(resp.ok());
 		assertEquals(1, resp.asInt());
 	}
 
 	@Test
 	public void testQfront() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testQback() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testQpush() {
 		Respose resp = ssdb.qpush("q1", 123);
 		assertTrue(resp.ok());
-		System.out.println(resp.asInt());
+		assertEquals(1, resp.asInt());
 		resp = ssdb.qpush("q1", 4);
 		resp = ssdb.qpush("q1", 7);
 		resp = ssdb.qpush("q1", 2);
 		resp = ssdb.qpush("q1", 1);
-		System.out.println(resp.asInt());
-	}
 
-	@Test
-	public void testQpop() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testBytes() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testBytess() {
-		fail("Not yet implemented");
+		assertEquals(123, ssdb.qpop("q1").asInt());
+		assertEquals(4, ssdb.qpop("q1").asInt());
+		assertEquals(7, ssdb.qpop("q1").asInt());
+		assertEquals(2, ssdb.qpop("q1").asInt());
+		assertEquals(1, ssdb.qpop("q1").asInt());
 	}
 
 	@Test

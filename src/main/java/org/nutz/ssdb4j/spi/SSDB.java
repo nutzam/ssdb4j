@@ -54,7 +54,7 @@ public interface SSDB {
 	Respose zget(Object key, Object zkey);
 	Respose zdel(Object key, Object zkey);
 	Respose zincr(Object key, Object zkey, int val);
-	//Respose zlist(Object zkey_start, Object zkey_end, int limit);
+	Respose zlist(Object key_start, Object key_end, int limit);
 	Respose zsize(Object key);
 	Respose zrank(Object key, Object zkey);
 	Respose zrrank(Object key, Object zkey);
@@ -78,8 +78,10 @@ public interface SSDB {
 	Respose qback(Object key);
 	Respose qpush(Object key, Object value);
 	Respose qpop(Object key);
+	Respose qlist(Object key_start, Object key_end, int limit);
+	Respose qclear(Object key);
 	
-	Respose flushdb(Object key);
+	Respose flushdb(String type);
 	Respose info();
 	Respose ping();
 	

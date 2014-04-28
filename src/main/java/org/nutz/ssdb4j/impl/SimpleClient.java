@@ -191,6 +191,11 @@ public class SimpleClient implements SSDB {
 	}
 	
 	@Override
+	public Respose zlist(Object zkey_start, Object zkey_end, int limit) {
+		return req(Cmd.zlist, bytes(zkey_start), bytes(zkey_end), (""+limit).getBytes());
+	}
+	
+	@Override
 	public Respose zrank(Object key, Object zkey) {
 		return req(Cmd.zrank,bytes(key), bytes(zkey));
 	}
@@ -234,7 +239,16 @@ public class SimpleClient implements SSDB {
 	public Respose qpop(Object key) {
 		return req(Cmd.qpop, bytes(key));
 	}
+	
+	@Override
+	public Respose qlist(Object key_start, Object key_end, int limit) {
+		return req(Cmd.qlist, bytes(key_start), bytes(key_end), (""+limit).getBytes());
+	}
 
+	@Override
+	public Respose qclear(Object key) {
+		return req(Cmd.qclear, bytes(key));
+	}
 
 	@Override
 	public Respose hkeys(Object key, Object start, Object end, int limit) {
@@ -307,10 +321,78 @@ public class SimpleClient implements SSDB {
 	}
 
 	@Override
-	public Respose flushdb(Object key) {
-		if (key != null)
-			return req(Cmd.flushdb, bytes(key));
-		return req(Cmd.flushdb);
+	public Respose flushdb(String type) {
+		if (type == null || type.length() == 0) {
+			flushdb_kv();
+			flushdb_hash();
+			flushdb_zset();
+			flushdb_queue();
+		} else if ("kv".equals(type)) {
+			flushdb_kv();
+		} else if ("hash".equals(type)) {
+			flushdb_hash();
+		} else if ("zset".equals(type)) {
+			flushdb_zset();
+		} else if ("queue".equals(type)) {
+			flushdb_queue();
+		}else {
+			throw new IllegalArgumentException("not such flushdb mode=" + type);
+		}
+		Respose resp = new Respose();
+		resp.stat = "ok";
+		return resp;
+	}
+	
+	protected long flushdb_kv() {
+		long count = 0;
+		while (true) {
+			List<String> keys = keys("", "", 1000).check().listString();
+			if (keys.isEmpty())
+				return count;
+			count += keys.size();
+			for (String key : keys) {
+				del(key);
+			}
+		}
+	}
+	
+	protected long flushdb_hash() {
+		long count = 0;
+		while (true) {
+			List<String> keys = hlist("", "", 1000).check().listString();
+			if (keys.isEmpty())
+				return count;
+			count += keys.size();
+			for (String key : keys) {
+				hclear(key);
+			}
+		}
+	}
+	
+	protected long flushdb_zset() {
+		long count = 0;
+		while (true) {
+			List<String> keys = zlist("", "", 1000).check().listString();
+			if (keys.isEmpty())
+				return count;
+			count += keys.size();
+			for (String key : keys) {
+				zclear(key);
+			}
+		}
+	}
+	
+	protected long flushdb_queue() {
+		long count = 0;
+		while (true) {
+			List<String> keys = qlist("", "", 1000).check().listString();
+			if (keys.isEmpty())
+				return count;
+			count += keys.size();
+			for (String key : keys) {
+				qclear(key);
+			}
+		}
 	}
 
 	@Override
