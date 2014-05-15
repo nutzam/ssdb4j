@@ -33,14 +33,14 @@ Apache Common Pool 1.6 http://commons.apache.org/proper/commons-pool/download_po
 
 ```
 import org.nutz.ssdb4j.spi.SSDB;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.SSDBs;
 
 
 SSDB ssdb = SSDBs.simple();
 ssdb.set("name", "wendal").check(); // call check() to make sure resp is ok 
 
-Respose resp = ssdb.get("name");
+Response resp = ssdb.get("name");
 if (!resp.ok()) {
     // ...
 } else {
