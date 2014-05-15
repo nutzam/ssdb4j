@@ -47,4 +47,9 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 			whenError(e);
 		}
 	}
+	
+	@Override
+	public void depose() throws Exception {
+		close();
+	}
 }

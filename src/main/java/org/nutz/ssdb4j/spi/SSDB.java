@@ -49,7 +49,7 @@ public interface SSDB {
 	Response multi_hset(Object key, Object ...pairs);
 	Response multi_hdel(Object key, Object ...hkeys);
 	//-----
-	
+	/*2014.05.15之前的官方驱动中参数类型是double,那是错误的*/
 	Response zset(Object key, Object zkey, int score);
 	Response zget(Object key, Object zkey);
 	Response zdel(Object key, Object zkey);
@@ -128,4 +128,11 @@ public interface SSDB {
 	Response eval(Object lua, Object... args);
 	@Deprecated/**官方ssdb尚不支持*/
 	Response evalsha(Object sha1, Object... args);
+	
+	/*=================================================================*/
+	/*==================一些管理方法,非ssdb指令=========================*/
+	/*=================================================================*/
+	
+	void _depose() throws Exception;
+	void changeObjectConv(ObjectConv conv);
 }

@@ -30,4 +30,10 @@ public class ReplicationSSDMStream implements SSDBStream {
 	@Override
 	public void close() throws Exception {
 	}
+	
+	@Override
+	public void depose() throws Exception {
+		master.depose();
+		slave.depose();
+	}
 }

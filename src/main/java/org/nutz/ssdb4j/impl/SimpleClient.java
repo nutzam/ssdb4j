@@ -61,8 +61,27 @@ public class SimpleClient implements SSDB {
 		this.conv = conv;
 	}
 	
+	@Override
+	public void changeObjectConv(ObjectConv conv) {
+		this.setObjectConv(conv);
+	}
+	
 	public void setSSDBStream(SSDBStream stream) {
 		this.stream = stream;
+	}
+	
+	@Override
+	public void _depose() throws Exception {
+		if (this.stream != null) {
+			stream.depose();
+			stream = null;
+		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		_depose();
 	}
 	
 	//----------------------------------------------------------------------------------

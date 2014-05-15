@@ -53,4 +53,17 @@ public class PoolSSDBStream implements SSDBStream {
 	@Override
 	public void close() throws Exception {
 	}
+	
+	@Override
+	public void depose() throws Exception {
+		if (pool != null) {
+			pool.close();
+			pool = null;
+		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		depose();
+	}
 }
