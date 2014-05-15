@@ -114,8 +114,17 @@ public class SSDBs {
 				throw new SSDBException("protocol error. unexpect byte=" + d);
 		}
 		byte[] data = new byte[len];
-		if (len > 0)
-			in.read(data);
+		if (len > 0) {
+			int count = 0;
+			int r = 0;
+			while (count < len) {
+				r = in.read(data, count, len - count > 8192 ? 8192 : len - count);
+				if (r > 0) {
+					count += r;
+				} else if (r == -1)
+					throw new SSDBException("protocol error. unexpect stream end!");
+			}
+		}
 		d = in.read();
 		if (d != '\n')
 			throw new SSDBException("protocol error. unexpect byte=" + d);
@@ -183,6 +192,6 @@ public class SSDBs {
 	 * @return 版本号
 	 */
 	public static String version() {
-		return "8.1";
+		return "8.3";
 	}
 }
