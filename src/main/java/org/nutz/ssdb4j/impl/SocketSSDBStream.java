@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBException;
 
 public class SocketSSDBStream extends AbstractIoSSDBStream {
@@ -37,7 +37,7 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 	}
 
 	@Override
-	protected Respose whenError(Throwable e) {
+	protected Response whenError(Throwable e) {
 		if (!socket.isClosed())
 			try {
 				socket.close();

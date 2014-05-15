@@ -9,81 +9,81 @@ import java.util.List;
 public interface SSDB {
 
 	/**根据key获取一个值*/
-	Respose get(Object key);
+	Response get(Object key);
 	/**设置一个key-val对*/
-	Respose set(Object key, Object val);
+	Response set(Object key, Object val);
 	/**设置一个key-val对,并设置过期时间,单位为秒*/
-	Respose setx(Object key, Object val, int ttl);
+	Response setx(Object key, Object val, int ttl);
 	/**根据key删除一个val*/
-	Respose del(Object key);
+	Response del(Object key);
 	/**自增*/
-	Respose incr(Object key, int val);
+	Response incr(Object key, int val);
 	/**是否存在*/
-	Respose exists(Object key);
+	Response exists(Object key);
 	/**遍历键*/
-	Respose keys(Object start, Object end, int limit);
+	Response keys(Object start, Object end, int limit);
 	/**批量set*/
-	Respose multi_set(Object ... pairs);
-	Respose multi_get(Object ... keys);
+	Response multi_set(Object ... pairs);
+	Response multi_get(Object ... keys);
 	/**批量删除*/
-	Respose multi_del(Object ... keys);
+	Response multi_del(Object ... keys);
 	
 	//-----
-	Respose scan(Object start, Object end, int limit);
-	Respose rscan(Object start, Object end, int limit);
+	Response scan(Object start, Object end, int limit);
+	Response rscan(Object start, Object end, int limit);
 	//----
 	
-	Respose hset(Object key, Object hkey, Object hval);
-	Respose hdel(Object key, Object hkey);
-	Respose hget(Object key, Object hkey);
-	Respose hsize(Object key);
-	Respose hlist(Object key, Object hkey, int limit);
-	Respose hincr(Object key, Object hkey, int val);
+	Response hset(Object key, Object hkey, Object hval);
+	Response hdel(Object key, Object hkey);
+	Response hget(Object key, Object hkey);
+	Response hsize(Object key);
+	Response hlist(Object key, Object hkey, int limit);
+	Response hincr(Object key, Object hkey, int val);
 	//-----
-	Respose hscan(Object key, Object start, Object end, int limit);
-	Respose hrscan(Object key, Object start, Object end, int limit);
-	Respose hkeys(Object key, Object start, Object end, int limit);
-	Respose hexists(Object key, Object hkey);
-	Respose hclear(Object key);
-	Respose multi_hget(Object key, Object ...hkeys);
-	Respose multi_hset(Object key, Object ...pairs);
-	Respose multi_hdel(Object key, Object ...hkeys);
+	Response hscan(Object key, Object start, Object end, int limit);
+	Response hrscan(Object key, Object start, Object end, int limit);
+	Response hkeys(Object key, Object start, Object end, int limit);
+	Response hexists(Object key, Object hkey);
+	Response hclear(Object key);
+	Response multi_hget(Object key, Object ...hkeys);
+	Response multi_hset(Object key, Object ...pairs);
+	Response multi_hdel(Object key, Object ...hkeys);
 	//-----
 	
-	Respose zset(Object key, Object zkey, int score);
-	Respose zget(Object key, Object zkey);
-	Respose zdel(Object key, Object zkey);
-	Respose zincr(Object key, Object zkey, int val);
-	Respose zlist(Object key_start, Object key_end, int limit);
-	Respose zsize(Object key);
-	Respose zrank(Object key, Object zkey);
-	Respose zrrank(Object key, Object zkey);
-	Respose zexists(Object key, Object zkey);
-	Respose zclear(Object key);
+	Response zset(Object key, Object zkey, int score);
+	Response zget(Object key, Object zkey);
+	Response zdel(Object key, Object zkey);
+	Response zincr(Object key, Object zkey, int val);
+	Response zlist(Object key_start, Object key_end, int limit);
+	Response zsize(Object key);
+	Response zrank(Object key, Object zkey);
+	Response zrrank(Object key, Object zkey);
+	Response zexists(Object key, Object zkey);
+	Response zclear(Object key);
 	
-	Respose zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit);
-	Respose zscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
-	Respose zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
 	
-	Respose zrange(Object key, int offset, int limit);
-	Respose zrrange(Object key, int offset, int limit);
+	Response zrange(Object key, int offset, int limit);
+	Response zrrange(Object key, int offset, int limit);
 	
-	Respose multi_zset(Object key, Object ... pairs);
-	Respose multi_zget(Object key, Object ... zkeys);
-	Respose multi_zdel(Object key, Object ... zkeys);
+	Response multi_zset(Object key, Object ... pairs);
+	Response multi_zget(Object key, Object ... zkeys);
+	Response multi_zdel(Object key, Object ... zkeys);
 	
 	//-----------
-	Respose qsize(Object key);
-	Respose qfront(Object key);
-	Respose qback(Object key);
-	Respose qpush(Object key, Object value);
-	Respose qpop(Object key);
-	Respose qlist(Object key_start, Object key_end, int limit);
-	Respose qclear(Object key);
+	Response qsize(Object key);
+	Response qfront(Object key);
+	Response qback(Object key);
+	Response qpush(Object key, Object value);
+	Response qpop(Object key);
+	Response qlist(Object key_start, Object key_end, int limit);
+	Response qclear(Object key);
 	
-	Respose flushdb(String type);
-	Respose info();
-	Respose ping();
+	Response flushdb(String type);
+	Response info();
+	Response ping();
 	
 	//---------------
 	
@@ -98,7 +98,7 @@ public interface SSDB {
 	 * 将缓存中的命令发送到服务器并依次获取返回值
 	 * @return 一系列响应
 	 */
-	List<Respose> exec();
+	List<Response> exec();
 	
 
 	/*=================================================================*/
@@ -106,21 +106,26 @@ public interface SSDB {
 	/*=================================================================*/
 
 	/**如果key不存在,就执行set操作*/
-	Respose setnx(Object key, Object val);
+	Response setnx(Object key, Object val);
 	/**取值并更新值*/
-	Respose getset(Object key, Object val);
+	Response getset(Object key, Object val);
 	
-	Respose qslice(Object key, int start, int end);
+	Response qslice(Object key, int start, int end);
 	
-	Respose qget(Object key, int index);
+	Response qget(Object key, int index);
 	
 	/*=================================================================*/
 	/*==================add at 1.6.8.6=================================*/
 	/*=================================================================*/
 	
-	Respose zcount(Object key, int start, int end);
-	Respose zsum(Object key, int start, int end);
-	Respose zavg(Object key, int start, int end);
+	Response zcount(Object key, int start, int end);
+	Response zsum(Object key, int start, int end);
+	Response zavg(Object key, int start, int end);
 	//Respose zRemRangeByScore();
 	//Respose zRemRangeByRank();
+	
+	@Deprecated/**官方ssdb尚不支持*/
+	Response eval(Object lua, Object... args);
+	@Deprecated/**官方ssdb尚不支持*/
+	Response evalsha(Object sha1, Object... args);
 }

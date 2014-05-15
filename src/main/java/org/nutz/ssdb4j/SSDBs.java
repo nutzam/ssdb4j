@@ -11,7 +11,7 @@ import org.nutz.ssdb4j.pool.PoolSSDBStream;
 import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
 import org.nutz.ssdb4j.replication.ReplicationSSDMStream;
 import org.nutz.ssdb4j.spi.Cmd;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 
@@ -163,8 +163,8 @@ public class SSDBs {
 	 * @throws IOException 常规IO异常
 	 * @throws SSDBException 读取到非预期值的时候抛错协议错误
 	 */
-	public static Respose readResp(InputStream in) throws IOException {
-		Respose resp = new Respose();
+	public static Response readResp(InputStream in) throws IOException {
+		Response resp = new Response();
 		byte[] data = SSDBs.readBlock(in);
 		if (data == null)
 			throw new SSDBException("protocol error. unexpect \\n");

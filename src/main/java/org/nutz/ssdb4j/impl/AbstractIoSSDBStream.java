@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 import org.nutz.ssdb4j.SSDBs;
 import org.nutz.ssdb4j.spi.Cmd;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
 import org.nutz.ssdb4j.spi.SSDBStreamCallback;
@@ -16,11 +16,11 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 
 	protected OutputStream out;
 
-	public synchronized Respose req(Cmd cmd, byte[]... vals) {
+	public synchronized Response req(Cmd cmd, byte[]... vals) {
 		beforeExec();
 		try {
 			SSDBs.sendCmd(out, cmd, vals);
-			Respose resp = SSDBs.readResp(in);
+			Response resp = SSDBs.readResp(in);
 			beforeReturn(resp);
 			return resp;
 		} catch (Throwable e) {
@@ -31,10 +31,10 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 	protected void beforeExec() {
 	}
 
-	protected void beforeReturn(Respose resp) {
+	protected void beforeReturn(Response resp) {
 	}
 
-	protected Respose whenError(Throwable e) {
+	protected Response whenError(Throwable e) {
 		throw new SSDBException(e);
 	}
 	

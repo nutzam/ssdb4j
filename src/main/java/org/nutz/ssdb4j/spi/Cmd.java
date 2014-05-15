@@ -69,6 +69,10 @@ public class Cmd {
 	public static final Cmd zcount = new Cmd("zcount", true, true);
 	public static final Cmd zsum = new Cmd("zsum", true, true);
 	public static final Cmd zavg = new Cmd("zavg", true, true);
+	
+
+	public static final Cmd eval = new Cmd("eval", false, false);
+	public static final Cmd evalsha = new Cmd("evalsha", false, false);
 
 	protected String name;
 	protected byte[] bytes;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.ObjectConv;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
@@ -34,7 +34,7 @@ public class SimpleClient implements SSDB {
 	}
 	
 
-	protected final Respose req(Cmd cmd, byte[] first, byte[][] lots) {
+	protected final Response req(Cmd cmd, byte[] first, byte[][] lots) {
 		byte[][] vals = new byte[lots.length+1][];
 		vals[0] = first;
 		for (int i = 0; i < lots.length; i++) {
@@ -43,7 +43,7 @@ public class SimpleClient implements SSDB {
 		return req(cmd, vals);
 	}
 	
-	protected Respose req(Cmd cmd, byte[] ... vals) {
+	protected Response req(Cmd cmd, byte[] ... vals) {
 		return stream.req(cmd, vals);
 	}
 
@@ -53,7 +53,7 @@ public class SimpleClient implements SSDB {
 	}
 
 	@Override
-	public List<Respose> exec() {
+	public List<Response> exec() {
 		throw new SSDBException("not batch!");
 	}
 	
@@ -67,261 +67,261 @@ public class SimpleClient implements SSDB {
 	
 	//----------------------------------------------------------------------------------
 
-	public Respose get(Object key) {
+	public Response get(Object key) {
 		return req(Cmd.get,bytes(key));
 	}
 
 	@Override
-	public Respose set(Object key, Object val) {
+	public Response set(Object key, Object val) {
 		return req(Cmd.set,bytes(key), bytes(val));
 	}
 
 	@Override
-	public Respose setx(Object key, Object val, int ttl) {
+	public Response setx(Object key, Object val, int ttl) {
 		return req(Cmd.setx,bytes(key), bytes(val), (""+ttl).getBytes());
 	}
 
 	@Override
-	public Respose del(Object key) {
+	public Response del(Object key) {
 		return req(Cmd.del,bytes(key));
 	}
 
 	@Override
-	public Respose incr(Object key, int val) {
+	public Response incr(Object key, int val) {
 		return req(Cmd.incr,bytes(key), (""+val).getBytes());
 	}
 
 	@Override
-	public Respose exists(Object key) {
+	public Response exists(Object key) {
 		return req(Cmd.exists,bytes(key));
 	}
 
 	@Override
-	public Respose keys(Object start, Object end, int limit) {
+	public Response keys(Object start, Object end, int limit) {
 		return req(Cmd.keys,bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose multi_set(Object... pairs) {
+	public Response multi_set(Object... pairs) {
 		return req(Cmd.multi_set,bytess(pairs));
 	}
 
 	@Override
-	public Respose multi_get(Object... keys) {
+	public Response multi_get(Object... keys) {
 		return req(Cmd.multi_get,bytess(keys));
 	}
 
 	@Override
-	public Respose multi_del(Object... keys) {
+	public Response multi_del(Object... keys) {
 		return req(Cmd.multi_del,bytess(keys));
 	}
 
 	@Override
-	public Respose scan(Object start, Object end, int limit) {
+	public Response scan(Object start, Object end, int limit) {
 		return req(Cmd.scan,bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose rscan(Object start, Object end, int limit) {
+	public Response rscan(Object start, Object end, int limit) {
 		return req(Cmd.rscan,bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose hset(Object key, Object hkey, Object hval) {
+	public Response hset(Object key, Object hkey, Object hval) {
 		return req(Cmd.hset,bytes(key), bytes(hkey), bytes(hval));
 	}
 
 	@Override
-	public Respose hdel(Object key, Object hkey) {
+	public Response hdel(Object key, Object hkey) {
 		return req(Cmd.hdel,bytes(key), bytes(hkey));
 	}
 
 	@Override
-	public Respose hget(Object key, Object hkey) {
+	public Response hget(Object key, Object hkey) {
 		return req(Cmd.hget,bytes(key), bytes(hkey));
 	}
 
 	@Override
-	public Respose hsize(Object key) {
+	public Response hsize(Object key) {
 		return req(Cmd.hsize,bytes(key));
 	}
 
 	@Override
-	public Respose hlist(Object key, Object hkey, int limit) {
+	public Response hlist(Object key, Object hkey, int limit) {
 		return req(Cmd.hlist,bytes(key), bytes(hkey), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose hincr(Object key, Object hkey, int val) {
+	public Response hincr(Object key, Object hkey, int val) {
 		return req(Cmd.hincr,bytes(key), bytes(hkey), (""+val).getBytes());
 	}
 
 	@Override
-	public Respose hscan(Object key, Object start, Object end, int limit) {
+	public Response hscan(Object key, Object start, Object end, int limit) {
 		return req(Cmd.hscan,bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose hrscan(Object key, Object start, Object end, int limit) {
+	public Response hrscan(Object key, Object start, Object end, int limit) {
 		return req(Cmd.hrscan,bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
-	public Respose zset(Object key, Object zkey, int score) {
+	public Response zset(Object key, Object zkey, int score) {
 		return req(Cmd.zset,bytes(key), bytes(zkey), (""+score).getBytes());
 	}
 
 	@Override
-	public Respose zget(Object key, Object zkey) {
+	public Response zget(Object key, Object zkey) {
 		return req(Cmd.zget,bytes(key), bytes(zkey));
 	}
 
 	@Override
-	public Respose zdel(Object key, Object zkey) {
+	public Response zdel(Object key, Object zkey) {
 		return req(Cmd.zdel,bytes(key), bytes(zkey));
 	}
 
 	@Override
-	public Respose zincr(Object key, Object zkey, int val) {
+	public Response zincr(Object key, Object zkey, int val) {
 		return req(Cmd.zincr,bytes(key), bytes(zkey), (""+val).getBytes());
 	}
 
 	@Override
-	public Respose zsize(Object key) {
+	public Response zsize(Object key) {
 		return req(Cmd.zsize,bytes(key));
 	}
 	
 	@Override
-	public Respose zlist(Object zkey_start, Object zkey_end, int limit) {
+	public Response zlist(Object zkey_start, Object zkey_end, int limit) {
 		return req(Cmd.zlist, bytes(zkey_start), bytes(zkey_end), (""+limit).getBytes());
 	}
 	
 	@Override
-	public Respose zrank(Object key, Object zkey) {
+	public Response zrank(Object key, Object zkey) {
 		return req(Cmd.zrank,bytes(key), bytes(zkey));
 	}
 
 	@Override
-	public Respose zrrank(Object key, Object zkey) {
+	public Response zrrank(Object key, Object zkey) {
 		return req(Cmd.zrrank, bytes(key), bytes(zkey));
 	}
 
 	@Override
-	public Respose zscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+	public Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
 		return req(Cmd.zscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+	public Response zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
 		return req(Cmd.zrscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose qsize(Object key) {
+	public Response qsize(Object key) {
 		return req(Cmd.qsize, bytes(key));
 	}
 
 	@Override
-	public Respose qfront(Object key) {
+	public Response qfront(Object key) {
 		return req(Cmd.qfront, bytes(key));
 	}
 
 	@Override
-	public Respose qback(Object key) {
+	public Response qback(Object key) {
 		return req(Cmd.qback, bytes(key));
 	}
 
 	@Override
-	public Respose qpush(Object key, Object value) {
+	public Response qpush(Object key, Object value) {
 		return req(Cmd.qpush, bytes(key), bytes(value));
 	}
 
 	@Override
-	public Respose qpop(Object key) {
+	public Response qpop(Object key) {
 		return req(Cmd.qpop, bytes(key));
 	}
 	
 	@Override
-	public Respose qlist(Object key_start, Object key_end, int limit) {
+	public Response qlist(Object key_start, Object key_end, int limit) {
 		return req(Cmd.qlist, bytes(key_start), bytes(key_end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose qclear(Object key) {
+	public Response qclear(Object key) {
 		return req(Cmd.qclear, bytes(key));
 	}
 
 	@Override
-	public Respose hkeys(Object key, Object start, Object end, int limit) {
+	public Response hkeys(Object key, Object start, Object end, int limit) {
 		return req(Cmd.hkeys, bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose hexists(Object key, Object hkey) {
+	public Response hexists(Object key, Object hkey) {
 		return req(Cmd.hexists, bytes(key), bytes(hkey));
 	}
 
 	@Override
-	public Respose hclear(Object key) {
+	public Response hclear(Object key) {
 		return req(Cmd.hclear, bytes(key));
 	}
 
 	@Override
-	public Respose multi_hget(Object key, Object... hkeys) {
+	public Response multi_hget(Object key, Object... hkeys) {
 		return req(Cmd.multi_hget, bytes(key), bytess(hkeys));
 	}
 
 	@Override
-	public Respose multi_hset(Object key, Object... pairs) {
+	public Response multi_hset(Object key, Object... pairs) {
 		return req(Cmd.multi_hset, bytes(key), bytess(pairs));
 	}
 
 	@Override
-	public Respose multi_hdel(Object key, Object... hkeys) {
+	public Response multi_hdel(Object key, Object... hkeys) {
 		return req(Cmd.multi_hdel, bytes(key), bytess(hkeys));
 	}
 
 	@Override
-	public Respose zexists(Object key, Object zkey) {
+	public Response zexists(Object key, Object zkey) {
 		return req(Cmd.zexists, bytes(key), bytes(zkey));
 	}
 
 	@Override
-	public Respose zclear(Object key) {
+	public Response zclear(Object key) {
 		return req(Cmd.zclear, bytes(key));
 	}
 
 	@Override
-	public Respose zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+	public Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit) {
 		return req(Cmd.zkeys, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose zrange(Object key, int offset, int limit) {
+	public Response zrange(Object key, int offset, int limit) {
 		return req(Cmd.zrange, bytes(key), (""+offset).getBytes(), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose zrrange(Object key, int offset, int limit) {
+	public Response zrrange(Object key, int offset, int limit) {
 		return req(Cmd.zrrange, bytes(key), (""+offset).getBytes(), (""+limit).getBytes());
 	}
 
 	@Override
-	public Respose multi_zset(Object key, Object... pairs) {
+	public Response multi_zset(Object key, Object... pairs) {
 		return req(Cmd.multi_zset, bytes(key), bytess(pairs));
 	}
 
 	@Override
-	public Respose multi_zget(Object key, Object... zkeys) {
+	public Response multi_zget(Object key, Object... zkeys) {
 		return req(Cmd.multi_zget, bytes(key), bytess(zkeys));
 	}
 
 	@Override
-	public Respose multi_zdel(Object key, Object... zkeys) {
+	public Response multi_zdel(Object key, Object... zkeys) {
 		return req(Cmd.multi_zdel, bytes(key), bytess(zkeys));
 	}
 
 	@Override
-	public Respose flushdb(String type) {
+	public Response flushdb(String type) {
 		if (type == null || type.length() == 0) {
 			flushdb_kv();
 			flushdb_hash();
@@ -338,7 +338,7 @@ public class SimpleClient implements SSDB {
 		}else {
 			throw new IllegalArgumentException("not such flushdb mode=" + type);
 		}
-		Respose resp = new Respose();
+		Response resp = new Response();
 		resp.stat = "ok";
 		return resp;
 	}
@@ -396,51 +396,59 @@ public class SimpleClient implements SSDB {
 	}
 
 	@Override
-	public Respose info() {
+	public Response info() {
 		return req(Cmd.info);
 	}
 
 	@Override
-	public Respose ping() {
+	public Response ping() {
 		return req(Cmd.ping);
 	}
 	
 	//------------------------------------------
 
 	@Override
-	public Respose setnx(Object key, Object val) {
+	public Response setnx(Object key, Object val) {
 		return req(Cmd.setnx, bytes(key), bytes(val));
 	}
 
 	@Override
-	public Respose getset(Object key, Object val) {
+	public Response getset(Object key, Object val) {
 		return req(Cmd.getset, bytes(key), bytes(val));
 	}
 
 	@Override
-	public Respose qslice(Object key, int start, int end) {
+	public Response qslice(Object key, int start, int end) {
 		return req(Cmd.qslice, bytes(key), (""+start).getBytes(), (""+end).getBytes());
 	}
 
 	@Override
-	public Respose qget(Object key, int index) {
+	public Response qget(Object key, int index) {
 		return req(Cmd.qget, bytes(key), (""+index).getBytes());
 	}
 
 	@Override
-	public Respose zcount(Object key, int start, int end) {
+	public Response zcount(Object key, int start, int end) {
 		return req(Cmd.zcount, bytes(key), (""+start).getBytes(), (""+end).getBytes());
 	}
 
 	@Override
-	public Respose zsum(Object key, int start, int end) {
+	public Response zsum(Object key, int start, int end) {
 		return req(Cmd.zsum, bytes(key), (""+start).getBytes(), (""+end).getBytes());
 	}
 
 	@Override
-	public Respose zavg(Object key, int start, int end) {
+	public Response zavg(Object key, int start, int end) {
 		return req(Cmd.zavg, bytes(key), (""+start).getBytes(), (""+end).getBytes());
 	}
 	
+	@Override
+	public Response eval(Object key, Object... args) {
+		return req(Cmd.eval, bytes(key), bytess(args));
+	}
 	
+	@Override
+	public Response evalsha(Object sha1, Object... args) {
+		return req(Cmd.evalsha, bytes(sha1), bytess(args));
+	}
 }

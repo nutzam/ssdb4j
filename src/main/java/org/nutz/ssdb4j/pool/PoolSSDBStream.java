@@ -2,7 +2,7 @@ package org.nutz.ssdb4j.pool;
 
 import org.apache.commons.pool.ObjectPool;
 import org.nutz.ssdb4j.spi.Cmd;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
 import org.nutz.ssdb4j.spi.SSDBStreamCallback;
@@ -15,7 +15,7 @@ public class PoolSSDBStream implements SSDBStream {
 		this.pool = pool;
 	}
 
-	public Respose req(Cmd cmd, byte[]... vals) {
+	public Response req(Cmd cmd, byte[]... vals) {
 		try {
 			SSDBStream steam = pool.borrowObject();
 			try {

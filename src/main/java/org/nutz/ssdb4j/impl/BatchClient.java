@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.nutz.ssdb4j.SSDBs;
 import org.nutz.ssdb4j.spi.Cmd;
-import org.nutz.ssdb4j.spi.Respose;
+import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
@@ -16,7 +16,7 @@ import org.nutz.ssdb4j.spi.SSDBStreamCallback;
 
 public class BatchClient extends SimpleClient implements SSDBStreamCallback, Runnable {
 
-	protected static Respose OK = new Respose();
+	protected static Response OK = new Response();
 	static {
 		OK.stat = "ok";
 	}
@@ -29,16 +29,16 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback, Run
 	
 	protected int count;
 	
-	protected List<Respose> resps;
+	protected List<Response> resps;
 	
 	public BatchClient(SSDBStream stream) {
 		super(stream);
-		this.resps = new ArrayList<Respose>();
+		this.resps = new ArrayList<Response>();
 		this.reqs = new ArrayList<BatchClient._Req>();
 	}
 
 	@Override
-	public Respose req(Cmd cmd, byte[]... vals) {
+	public Response req(Cmd cmd, byte[]... vals) {
 		if (reqs == null)
 			throw new SSDBException("this BatchClient is invaild!");
 		reqs.add(new _Req(cmd, vals));
@@ -46,12 +46,12 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback, Run
 	}
 	
 	@Override
-	public synchronized List<Respose> exec() {
+	public synchronized List<Response> exec() {
 		if (reqs == null)
 			throw new SSDBException("this BatchClient is invaild!");
 		count = reqs.size();
 		stream.callback(this);
-		List<Respose> resps = this.resps;
+		List<Response> resps = this.resps;
 		this.resps = null;
 		return resps;
 	}

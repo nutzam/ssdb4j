@@ -14,15 +14,15 @@ import org.nutz.ssdb4j.SSDBs;
  * @author wendal(wendal1985@gmail.com)
  *
  */
-public class Respose {
+public class Response {
 
 	public String stat;
 	public ArrayList<byte[]> datas = new ArrayList<byte[]>(2);
 	public Charset charset = SSDBs.DEFAULT_CHARSET;
 	
-	public Respose check() {
+	public Response check() {
 		if (!ok())
-			throw new SSDBException("stat=" + stat);
+			throw new SSDBException("msg=" + stat + ", values=" + listString());
 		return this;
 	}
 	

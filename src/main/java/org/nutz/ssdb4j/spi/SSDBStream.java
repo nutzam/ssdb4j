@@ -7,7 +7,7 @@ package org.nutz.ssdb4j.spi;
  */
 public interface SSDBStream {
 	
-	Respose req(Cmd cmd, byte[] ...vals);
+	Response req(Cmd cmd, byte[] ...vals);
 	
 	void callback(SSDBStreamCallback callback);
 	
