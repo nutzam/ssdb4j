@@ -345,15 +345,15 @@ public class SimpleClient implements SSDB {
 			flushdb_kv();
 			flushdb_hash();
 			flushdb_zset();
-			flushdb_queue();
+			flushdb_list();
 		} else if ("kv".equals(type)) {
 			flushdb_kv();
 		} else if ("hash".equals(type)) {
 			flushdb_hash();
 		} else if ("zset".equals(type)) {
 			flushdb_zset();
-		} else if ("queue".equals(type)) {
-			flushdb_queue();
+		} else if ("list".equals(type)) {
+			flushdb_list();
 		}else {
 			throw new IllegalArgumentException("not such flushdb mode=" + type);
 		}
@@ -401,7 +401,7 @@ public class SimpleClient implements SSDB {
 		}
 	}
 	
-	protected long flushdb_queue() {
+	protected long flushdb_list() {
 		long count = 0;
 		while (true) {
 			List<String> keys = qlist("", "", 1000).check().listString();
@@ -469,5 +469,10 @@ public class SimpleClient implements SSDB {
 	@Override
 	public Response evalsha(Object sha1, Object... args) {
 		return req(Cmd.evalsha, bytes(sha1), bytess(args));
+	}
+	
+	@Override
+	public Response ttl(Object key) {
+		return req(Cmd.ttl, bytes(key));
 	}
 }

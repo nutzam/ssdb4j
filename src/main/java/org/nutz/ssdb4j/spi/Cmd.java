@@ -73,6 +73,8 @@ public class Cmd {
 
 	public static final Cmd eval = new Cmd("eval", false, false);
 	public static final Cmd evalsha = new Cmd("evalsha", false, false);
+	
+	public static final Cmd ttl = new Cmd("ttl", false, true);
 
 	protected String name;
 	protected byte[] bytes;
