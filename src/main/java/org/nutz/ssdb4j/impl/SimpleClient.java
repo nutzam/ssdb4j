@@ -97,7 +97,7 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response setx(Object key, Object val, int ttl) {
-		return req(Cmd.setx,bytes(key), bytes(val), (""+ttl).getBytes());
+		return req(Cmd.setx,bytes(key), bytes(val), Integer.toString(ttl).getBytes());
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response incr(Object key, int val) {
-		return req(Cmd.incr,bytes(key), (""+val).getBytes());
+		return req(Cmd.incr,bytes(key), Integer.toString(val).getBytes());
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response keys(Object start, Object end, int limit) {
-		return req(Cmd.keys,bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.keys,bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -137,12 +137,12 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response scan(Object start, Object end, int limit) {
-		return req(Cmd.scan,bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.scan,bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response rscan(Object start, Object end, int limit) {
-		return req(Cmd.rscan,bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.rscan,bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -167,26 +167,26 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response hlist(Object key, Object hkey, int limit) {
-		return req(Cmd.hlist,bytes(key), bytes(hkey), (""+limit).getBytes());
+		return req(Cmd.hlist,bytes(key), bytes(hkey), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response hincr(Object key, Object hkey, int val) {
-		return req(Cmd.hincr,bytes(key), bytes(hkey), (""+val).getBytes());
+		return req(Cmd.hincr,bytes(key), bytes(hkey), Integer.toString(val).getBytes());
 	}
 
 	@Override
 	public Response hscan(Object key, Object start, Object end, int limit) {
-		return req(Cmd.hscan,bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.hscan,bytes(key), bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response hrscan(Object key, Object start, Object end, int limit) {
-		return req(Cmd.hrscan,bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.hrscan,bytes(key), bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	public Response zset(Object key, Object zkey, int score) {
-		return req(Cmd.zset,bytes(key), bytes(zkey), (""+score).getBytes());
+		return req(Cmd.zset,bytes(key), bytes(zkey), Integer.toString(score).getBytes());
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response zincr(Object key, Object zkey, int val) {
-		return req(Cmd.zincr,bytes(key), bytes(zkey), (""+val).getBytes());
+		return req(Cmd.zincr,bytes(key), bytes(zkey), Integer.toString(val).getBytes());
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public class SimpleClient implements SSDB {
 	
 	@Override
 	public Response zlist(Object zkey_start, Object zkey_end, int limit) {
-		return req(Cmd.zlist, bytes(zkey_start), bytes(zkey_end), (""+limit).getBytes());
+		return req(Cmd.zlist, bytes(zkey_start), bytes(zkey_end), Integer.toString(limit).getBytes());
 	}
 	
 	@Override
@@ -226,12 +226,12 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
+		return req(Cmd.zscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zrscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
+		return req(Cmd.zrscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -261,7 +261,7 @@ public class SimpleClient implements SSDB {
 	
 	@Override
 	public Response qlist(Object key_start, Object key_end, int limit) {
-		return req(Cmd.qlist, bytes(key_start), bytes(key_end), (""+limit).getBytes());
+		return req(Cmd.qlist, bytes(key_start), bytes(key_end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -271,7 +271,7 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response hkeys(Object key, Object start, Object end, int limit) {
-		return req(Cmd.hkeys, bytes(key), bytes(start), bytes(end), (""+limit).getBytes());
+		return req(Cmd.hkeys, bytes(key), bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -311,17 +311,17 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zkeys, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), (""+limit).getBytes());
+		return req(Cmd.zkeys, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response zrange(Object key, int offset, int limit) {
-		return req(Cmd.zrange, bytes(key), (""+offset).getBytes(), (""+limit).getBytes());
+		return req(Cmd.zrange, bytes(key), Integer.toString(offset).getBytes(), Integer.toString(limit).getBytes());
 	}
 
 	@Override
 	public Response zrrange(Object key, int offset, int limit) {
-		return req(Cmd.zrrange, bytes(key), (""+offset).getBytes(), (""+limit).getBytes());
+		return req(Cmd.zrrange, bytes(key), Integer.toString(offset).getBytes(), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -438,27 +438,27 @@ public class SimpleClient implements SSDB {
 
 	@Override
 	public Response qslice(Object key, int start, int end) {
-		return req(Cmd.qslice, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+		return req(Cmd.qslice, bytes(key), Integer.toString(start).getBytes(), Integer.toString(end).getBytes());
 	}
 
 	@Override
 	public Response qget(Object key, int index) {
-		return req(Cmd.qget, bytes(key), (""+index).getBytes());
+		return req(Cmd.qget, bytes(key), Integer.toString(index).getBytes());
 	}
 
 	@Override
 	public Response zcount(Object key, int start, int end) {
-		return req(Cmd.zcount, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+		return req(Cmd.zcount, bytes(key), Integer.toString(start).getBytes(), Integer.toString(end).getBytes());
 	}
 
 	@Override
 	public Response zsum(Object key, int start, int end) {
-		return req(Cmd.zsum, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+		return req(Cmd.zsum, bytes(key), Integer.toString(start).getBytes(), Integer.toString(end).getBytes());
 	}
 
 	@Override
 	public Response zavg(Object key, int start, int end) {
-		return req(Cmd.zavg, bytes(key), (""+start).getBytes(), (""+end).getBytes());
+		return req(Cmd.zavg, bytes(key), Integer.toString(start).getBytes(), Integer.toString(end).getBytes());
 	}
 	
 	@Override
