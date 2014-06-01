@@ -18,8 +18,10 @@ public interface SSDB {
 	Response del(Object key);
 	/**自增*/
 	Response incr(Object key, int val);
+	Response decr(Object key, int val);
 	/**是否存在*/
 	Response exists(Object key);
+	Response multi_exists(Object...keys);
 	/**遍历键*/
 	Response keys(Object start, Object end, int limit);
 	/**批量set*/
@@ -39,27 +41,36 @@ public interface SSDB {
 	Response hsize(Object key);
 	Response hlist(Object key, Object hkey, int limit);
 	Response hincr(Object key, Object hkey, int val);
+	Response hdecr(Object key, Object hkey, int val);
 	//-----
 	Response hscan(Object key, Object start, Object end, int limit);
 	Response hrscan(Object key, Object start, Object end, int limit);
 	Response hkeys(Object key, Object start, Object end, int limit);
 	Response hexists(Object key, Object hkey);
 	Response hclear(Object key);
+	Response hgetall(Object key);
+	Response hvals(Object key, Object start, Object end, int limit);
 	Response multi_hget(Object key, Object ...hkeys);
 	Response multi_hset(Object key, Object ...pairs);
 	Response multi_hdel(Object key, Object ...hkeys);
+	Response multi_hexists(Object ...keys);
+	Response multi_hsize(Object ...keys);
 	//-----
 	/*2014.05.15之前的官方驱动中参数类型是double,那是错误的*/
 	Response zset(Object key, Object zkey, int score);
 	Response zget(Object key, Object zkey);
 	Response zdel(Object key, Object zkey);
 	Response zincr(Object key, Object zkey, int val);
+	Response zdecr(Object key, Object zkey, int val);
 	Response zlist(Object key_start, Object key_end, int limit);
 	Response zsize(Object key);
 	Response zrank(Object key, Object zkey);
 	Response zrrank(Object key, Object zkey);
 	Response zexists(Object key, Object zkey);
 	Response zclear(Object key);
+	
+	Response zremrangebyrank(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zremrangebyscore(Object key, Object zkey_start, int score_start, int score_end, int limit);
 	
 	Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit);
 	Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
@@ -71,15 +82,23 @@ public interface SSDB {
 	Response multi_zset(Object key, Object ... pairs);
 	Response multi_zget(Object key, Object ... zkeys);
 	Response multi_zdel(Object key, Object ... zkeys);
+	Response multi_zexists(Object key, Object ...zkeys);
+	Response multi_zsize(Object ...keys);
 	
 	//-----------
 	Response qsize(Object key);
 	Response qfront(Object key);
 	Response qback(Object key);
 	Response qpush(Object key, Object value);
+	Response qpush_front(Object key, Object value);
+	Response qpush_back(Object key, Object value);
 	Response qpop(Object key);
+	Response qpop_front(Object key);
+	Response qpop_back(Object key);
+	Response qfix(Object key);
 	Response qlist(Object key_start, Object key_end, int limit);
 	Response qclear(Object key);
+	Response qrange(Object key, int begin, int limit);
 	
 	Response flushdb(String type);
 	Response info();
@@ -121,8 +140,6 @@ public interface SSDB {
 	Response zcount(Object key, int start, int end);
 	Response zsum(Object key, int start, int end);
 	Response zavg(Object key, int start, int end);
-	//Respose zRemRangeByScore();
-	//Respose zRemRangeByRank();
 	
 	@Deprecated/**官方ssdb尚不支持*/
 	Response eval(Object lua, Object... args);
@@ -134,6 +151,11 @@ public interface SSDB {
 	/*=================================================================*/
 	
 	Response ttl(Object key);
+	Response expire(Object key, int ttl);
+	
+	//------------------------------------------------------------------
+	Response key_range();
+	Response compact();
 	
 	
 	/*=================================================================*/
@@ -142,4 +164,11 @@ public interface SSDB {
 	
 	void _depose() throws Exception;
 	void changeObjectConv(ObjectConv conv);
+	
+	/*=================================================================*/
+	/*==================内部命令?======================================*/
+	/*=================================================================*/
+	@Deprecated Response dump();
+	@Deprecated Response sync140();
+	@Deprecated Response clear_binlog();
 }

@@ -1,12 +1,20 @@
 package org.nutz.ssdb4j.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -387,17 +395,27 @@ public class SimpleClientTest {
 		System.out.println((char)85);
 	}
 	
-//	public static void main(String[] args) {
-//		Method[] mys = SSDB.class.getMethods();
-//		for (Method method : mys) {
-//			for (Method originMethod : com.udpwork.ssdb.SSDB.class.getMethods()) {
-//				if (originMethod.getName().equals(method.getName())) {
-//					if (method.getParameterTypes().length != originMethod.getParameterTypes().length) {
-//						System.out.println(">> " + method.getName() + "   " + method.getParameterTypes().length + " <> " + originMethod.getParameterTypes().length);
-//					}
-//					//System.out.println(method.getParameterTypes().length + "_" + originMethod.getParameterTypes().length);
-//				}
-//			}
-//		}
-//	}
+	public static void main(String[] args) throws Exception {
+		URL url = new URL("https://github.com/ideawu/ssdb/raw/dev/src/serv.cpp");
+		InputStream in = url.openStream();
+		Reader reader = new InputStreamReader(in);
+		BufferedReader br = new BufferedReader(reader);
+		ArrayList<String> ssdb_def_opts = new ArrayList<String>();
+		while (true) {
+			String line = br.readLine();
+			if (line == null)
+				break;
+			System.out.println(line);
+			line = line.trim();
+			if (line.startsWith("#"))
+				continue;
+			if (!line.startsWith("DEF_PROC"))
+				continue;
+			ssdb_def_opts.add(line.substring(line.indexOf('(')+1, line.indexOf(')')));
+		}
+		for (Method method : SSDB.class.getMethods()) {
+			ssdb_def_opts.remove(method.getName());
+		}
+		System.out.println(ssdb_def_opts);
+	}
 }

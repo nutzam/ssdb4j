@@ -75,6 +75,32 @@ public class Cmd {
 	public static final Cmd evalsha = new Cmd("evalsha", false, false);
 	
 	public static final Cmd ttl = new Cmd("ttl", false, true);
+	
+	public static final Cmd decr             =  new Cmd("decr"           , true, true);
+	public static final Cmd multi_exists     =  new Cmd("multi_exists"   , true, false);
+	public static final Cmd hdecr            =  new Cmd("hdecr"          , false, false);
+	public static final Cmd hgetall          =  new Cmd("hgetall"        , false, false);
+	public static final Cmd hvals            =  new Cmd("hvals"          , false, false);
+	public static final Cmd multi_hexists    =  new Cmd("multi_hexists"  , false, false);
+	public static final Cmd multi_hsize      =  new Cmd("multi_hsize"    , false, false);
+	public static final Cmd zdecr            =  new Cmd("zdecr"          , false, false);
+	public static final Cmd zremrangebyrank  =  new Cmd("zremrangebyrank", false, false);
+	public static final Cmd zremrangebyscore =  new Cmd("zremrangebyscor", false, false);
+	public static final Cmd multi_zexists    =  new Cmd("multi_zexists"  , false, false);
+	public static final Cmd multi_zsize      =  new Cmd("multi_zsize"    , false, false);
+	public static final Cmd qpush_front      =  new Cmd("qpush_front"    , false, false);
+	public static final Cmd qpush_back       =  new Cmd("qpush_back"     , false, false);
+	public static final Cmd qpop_front       =  new Cmd("qpop_front"     , false, false);
+	public static final Cmd qpop_back        =  new Cmd("qpop_back"      , false, false);
+	public static final Cmd qfix             =  new Cmd("qfix"           , false, false);
+	public static final Cmd qrange           =  new Cmd("qrange"         , false, false);
+	public static final Cmd dump             =  new Cmd("dump"           , false, false);
+	public static final Cmd sync140          =  new Cmd("sync140"        , false, false);
+	public static final Cmd compact          =  new Cmd("compact"        , false, false);
+	public static final Cmd key_range        =  new Cmd("key_range"      , false, false);
+	public static final Cmd expire           =  new Cmd("expire"         , false, false);
+	public static final Cmd clear_binlog     =  new Cmd("clear_binlog"   , false, false);
+
 
 	protected String name;
 	protected byte[] bytes;
