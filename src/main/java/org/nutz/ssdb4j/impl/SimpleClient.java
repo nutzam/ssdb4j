@@ -475,4 +475,124 @@ public class SimpleClient implements SSDB {
 	public Response ttl(Object key) {
 		return req(Cmd.ttl, bytes(key));
 	}
+	
+	@Override
+	public Response decr(Object key, int val) {
+		return req(Cmd.decr, bytes(key), Integer.toString(val).getBytes());
+	}
+	
+	@Override
+	public Response multi_exists(Object... keys) {
+		return req(Cmd.multi_exists, bytess(keys));
+	}
+	
+	@Override
+	public Response hdecr(Object key, Object hkey, int val) {
+		return req(Cmd.hdecr, bytes(key), bytes(hkey), Integer.toString(val).getBytes());
+	}
+	
+	@Override
+	public Response hgetall(Object key) {
+		return req(Cmd.hgetall, bytes(key));
+	}
+	
+	@Override
+	public Response hvals(Object key, Object start, Object end, int limit) {
+		return req(Cmd.hvals, bytes(key), bytes(start), bytes(end), Integer.toString(limit).getBytes());
+	}
+	
+	@Override
+	public Response multi_hexists(Object... keys) {
+		return req(Cmd.hvals, bytess(keys));
+	}
+	
+	@Override
+	public Response multi_hsize(Object... keys) {
+		return req(Cmd.multi_hsize, bytes(keys));
+	}
+	
+	@Override
+	public Response zdecr(Object key, Object zkey, int val) {
+		return req(Cmd.zdecr, bytes(key), bytes(zkey), Integer.toString(val).getBytes());
+	}
+	
+	@Override
+	public Response zremrangebyrank(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+		return req(Cmd.zremrangebyrank, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	}
+	
+	@Override
+	public Response zremrangebyscore(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+		return req(Cmd.zremrangebyscore, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	}
+	
+	@Override
+	public Response multi_zexists(Object key, Object... zkeys) {
+		return req(Cmd.zexists, bytes(key), bytess(zkeys));
+	}
+	
+	@Override
+	public Response multi_zsize(Object... keys) {
+		return req(Cmd.zsize, bytess(keys));
+	}
+	
+	@Override
+	public Response qpush_back(Object key, Object value) {
+		return req(Cmd.qpush_back, bytes(key), bytes(value));
+	}
+	
+	@Override
+	public Response qpush_front(Object key, Object value) {
+		return req(Cmd.qpush_front, bytes(key), bytes(value));
+	}
+	
+	@Override
+	public Response qpop_back(Object key) {
+		return req(Cmd.qpop_back, bytes(key));
+	}
+	
+	@Override
+	public Response qpop_front(Object key) {
+		return req(Cmd.qpop_front, bytes(key));
+	}
+	
+	@Override
+	public Response qrange(Object key, int begin, int limit) {
+		return req(Cmd.qrange, bytes(key), Integer.toString(begin).getBytes(), Integer.toString(limit).getBytes());
+	}
+	
+	@Override
+	public Response qfix(Object key) {
+		return req(Cmd.qfix, bytes(key));
+	}
+	
+	@Override
+	public Response dump() {
+		return req(Cmd.dump);
+	}
+	
+	@Override
+	public Response clear_binlog() {
+		return req(Cmd.clear_binlog);
+	}
+	
+	@Override
+	public Response compact() {
+		return req(Cmd.compact);
+	}
+	
+	@Override
+	public Response expire(Object key, int ttl) {
+		return req(Cmd.expire, bytes(key), Integer.toString(ttl).getBytes());
+	}
+	
+	@Override
+	public Response key_range() {
+		return req(Cmd.key_range);
+	}
+	
+	@Override
+	public Response sync140() {
+		return null;
+	}
 }

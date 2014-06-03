@@ -405,7 +405,7 @@ public class SimpleClientTest {
 			String line = br.readLine();
 			if (line == null)
 				break;
-			System.out.println(line);
+//			System.out.println(line);
 			line = line.trim();
 			if (line.startsWith("#"))
 				continue;
