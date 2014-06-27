@@ -9,8 +9,4 @@ public class SocketSSDBStreamPool extends GenericObjectPool<SSDBStream> {
 		super(new SocketSSDBStreamFactory(host, port, timeout), config);
 	}
 
-	public void invalidateObject(SSDBStream obj) throws Exception {
-		if (obj != null)
-			obj.close();
-	}
 }
