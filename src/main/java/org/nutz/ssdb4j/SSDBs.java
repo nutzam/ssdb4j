@@ -63,9 +63,12 @@ public class SSDBs {
 			config = new Config();
 			config.testWhileIdle = true;
 		}
-		return new SimpleClient(new PoolSSDBStream(new SocketSSDBStreamPool(host, port, timeout, config)));
+		return new SimpleClient(_pool(host, port, timeout, config));
 	}
 	
+	protected static final PoolSSDBStream _pool(String host, int port, int timeout, Config config) {
+		return new PoolSSDBStream(new SocketSSDBStreamPool(host, port, timeout, config));
+	}
 	
 	/**
 	 * 按指定配置生成master/slave且使用连接池的客户端
@@ -81,8 +84,8 @@ public class SSDBs {
 			config = new Config();
 			config.testWhileIdle = true;
 		}
-		PoolSSDBStream master = new PoolSSDBStream(new SocketSSDBStreamPool(masterHost, masterPort, timeout, config));
-		PoolSSDBStream slave = new PoolSSDBStream(new SocketSSDBStreamPool(slaveHost, slavePort, timeout, config));
+		PoolSSDBStream master = _pool(masterHost, masterPort, timeout, config);
+		PoolSSDBStream slave = _pool(slaveHost, slavePort, timeout, config);
 		return new SimpleClient(new ReplicationSSDMStream(master, slave));
 	}
 	

@@ -16,22 +16,19 @@ public class PoolSSDBStream implements SSDBStream {
 	}
 
 	public Response req(Cmd cmd, byte[]... vals) {
+		SSDBStream steam = null;
 		try {
-			SSDBStream steam = pool.borrowObject();
-			try {
-				return steam.req(cmd, vals);
-			} catch (Exception e) {
-				try {
-					steam.close();
-				} catch (Throwable e2) {
-				}
-				steam = null;
-				throw e;
-			}finally {
-				if (steam != null)
-					pool.returnObject(steam);
-			}
+			steam = pool.borrowObject();
+			Response resp = steam.req(cmd, vals);
+			pool.returnObject(steam);
+			return resp;
 		} catch (Exception e) {
+			if (steam != null)
+				try {
+					pool.invalidateObject(steam);
+				} catch (Exception e1) {
+					e.printStackTrace();
+				}
 			throw new SSDBException(e);
 		}
 	}
@@ -64,6 +61,6 @@ public class PoolSSDBStream implements SSDBStream {
 	
 	@Override
 	protected void finalize() throws Throwable {
-		depose();
+//		depose();
 	}
 }
