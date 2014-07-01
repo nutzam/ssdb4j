@@ -27,7 +27,7 @@ public class PoolSSDBStream implements SSDBStream {
 				try {
 					pool.invalidateObject(steam);
 				} catch (Exception e1) {
-					e.printStackTrace();
+					e1.printStackTrace();
 				}
 			throw new SSDBException(e);
 		}
