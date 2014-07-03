@@ -185,8 +185,8 @@ public class SimpleClient implements SSDB {
 		return req(Cmd.hrscan,bytes(key), bytes(start), bytes(end), Integer.toString(limit).getBytes());
 	}
 
-	public Response zset(Object key, Object zkey, int score) {
-		return req(Cmd.zset,bytes(key), bytes(zkey), Integer.toString(score).getBytes());
+	public Response zset(Object key, Object zkey, long score) {
+		return req(Cmd.zset,bytes(key), bytes(zkey), Long.toString(score).getBytes());
 	}
 
 	@Override
@@ -225,13 +225,13 @@ public class SimpleClient implements SSDB {
 	}
 
 	@Override
-	public Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	public Response zscan(Object key, Object zkey_start, long score_start, long score_end, int limit) {
+		return req(Cmd.zscan, bytes(key), bytes(zkey_start), Long.toString(score_start).getBytes(), Long.toString(score_end).getBytes(), Integer.toString(limit).getBytes());
 	}
 
 	@Override
-	public Response zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zrscan, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	public Response zrscan(Object key, Object zkey_start, long score_start, long score_end, int limit) {
+		return req(Cmd.zrscan, bytes(key), bytes(zkey_start), Long.toString(score_start).getBytes(), Long.toString(score_end).getBytes(), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -310,8 +310,8 @@ public class SimpleClient implements SSDB {
 	}
 
 	@Override
-	public Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit) {
-		return req(Cmd.zkeys, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	public Response zkeys(Object key, Object zkey_start, long score_start, long score_end, int limit) {
+		return req(Cmd.zkeys, bytes(key), bytes(zkey_start), Long.toString(score_start).getBytes(), Long.toString(score_end).getBytes(), Integer.toString(limit).getBytes());
 	}
 
 	@Override
@@ -517,12 +517,12 @@ public class SimpleClient implements SSDB {
 	}
 	
 	@Override
-	public Response zremrangebyrank(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+	public Response zremrangebyrank(Object key, Object zkey_start, long score_start, long score_end, int limit) {
 		return req(Cmd.zremrangebyrank, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
 	}
 	
 	@Override
-	public Response zremrangebyscore(Object key, Object zkey_start, int score_start, int score_end, int limit) {
+	public Response zremrangebyscore(Object key, Object zkey_start, long score_start, long score_end, int limit) {
 		return req(Cmd.zremrangebyscore, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
 	}
 	

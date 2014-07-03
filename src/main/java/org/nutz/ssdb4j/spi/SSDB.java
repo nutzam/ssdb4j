@@ -57,7 +57,7 @@ public interface SSDB {
 	Response multi_hsize(Object ...keys);
 	//-----
 	/*2014.05.15之前的官方驱动中参数类型是double,那是错误的*/
-	Response zset(Object key, Object zkey, int score);
+	Response zset(Object key, Object zkey, long score);
 	Response zget(Object key, Object zkey);
 	Response zdel(Object key, Object zkey);
 	Response zincr(Object key, Object zkey, int val);
@@ -69,12 +69,12 @@ public interface SSDB {
 	Response zexists(Object key, Object zkey);
 	Response zclear(Object key);
 	
-	Response zremrangebyrank(Object key, Object zkey_start, int score_start, int score_end, int limit);
-	Response zremrangebyscore(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zremrangebyrank(Object key, Object zkey_start, long score_start, long score_end, int limit);
+	Response zremrangebyscore(Object key, Object zkey_start, long score_start, long score_end, int limit);
 	
-	Response zkeys(Object key, Object zkey_start, int score_start, int score_end, int limit);
-	Response zscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
-	Response zrscan(Object key, Object zkey_start, int score_start, int score_end, int limit);
+	Response zkeys(Object key, Object zkey_start, long score_start, long score_end, int limit);
+	Response zscan(Object key, Object zkey_start, long score_start, long score_end, int limit);
+	Response zrscan(Object key, Object zkey_start, long score_start, long score_end, int limit);
 	
 	Response zrange(Object key, int offset, int limit);
 	Response zrrange(Object key, int offset, int limit);
