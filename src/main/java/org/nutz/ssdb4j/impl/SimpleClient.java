@@ -70,20 +70,6 @@ public class SimpleClient implements SSDB {
 		this.stream = stream;
 	}
 	
-	@Override
-	public void _depose() throws Exception {
-		if (this.stream != null) {
-			stream.depose();
-			stream = null;
-		}
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		_depose();
-	}
-	
 	//----------------------------------------------------------------------------------
 
 	public Response get(Object key) {

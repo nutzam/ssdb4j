@@ -46,15 +46,4 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 			}
 		return super.whenError(e);
 	}
-
-	protected void finalize() throws Throwable {
-		if (socket != null && !socket.isClosed())
-			socket.close();
-	}
-	
-	public void close() throws Exception {
-		if (socket != null && !socket.isClosed())
-			socket.close();
-		socket = null;
-	}
 }

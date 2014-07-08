@@ -26,14 +26,4 @@ public class ReplicationSSDMStream implements SSDBStream {
 	public void callback(SSDBStreamCallback callback) {
 		master.callback(callback);
 	}
-
-	@Override
-	public void close() throws Exception {
-	}
-	
-	@Override
-	public void depose() throws Exception {
-		master.depose();
-		slave.depose();
-	}
 }

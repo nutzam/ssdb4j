@@ -48,8 +48,4 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 		}
 	}
 	
-	@Override
-	public void depose() throws Exception {
-		close();
-	}
 }

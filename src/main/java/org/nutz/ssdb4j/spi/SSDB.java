@@ -162,7 +162,7 @@ public interface SSDB {
 	/*==================一些管理方法,非ssdb指令=========================*/
 	/*=================================================================*/
 	
-	void _depose() throws Exception;
+//	void _depose() throws Exception;
 	void changeObjectConv(ObjectConv conv);
 	
 	/*=================================================================*/
