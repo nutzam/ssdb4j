@@ -1,5 +1,7 @@
 package org.nutz.ssdb4j.replication;
 
+import java.io.IOException;
+
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBStream;
@@ -27,8 +29,11 @@ public class ReplicationSSDMStream implements SSDBStream {
 		master.callback(callback);
 	}
 	
-	public void close() throws Exception {
-		master.close();
-		slave.close();
+	public void close() throws IOException {
+		try {
+			master.close();
+		} finally {
+			slave.close();
+		}
 	}
 }

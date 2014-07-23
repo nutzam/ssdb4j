@@ -1,5 +1,7 @@
 package org.nutz.ssdb4j.jni;
 
+import java.io.IOException;
+
 import org.nutz.ssdb4j.impl.SimpleClient;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
@@ -41,10 +43,10 @@ public class JniSSDB implements SSDBStream {
 		throw new RuntimeException("JNI Not impl callback");
 	}
 
-	public void close() {
+	public void close() throws IOException {
 		int re = _close();
 		if (re != 0) {
-			throw new IllegalArgumentException("re="+re);
+			throw new IOException("re="+re);
 		}
 	}
 

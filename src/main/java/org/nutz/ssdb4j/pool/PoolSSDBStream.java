@@ -1,5 +1,7 @@
 package org.nutz.ssdb4j.pool;
 
+import java.io.IOException;
+
 import org.apache.commons.pool.ObjectPool;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
@@ -47,7 +49,13 @@ public class PoolSSDBStream implements SSDBStream {
 		}
 	}
 	
-	public void close() throws Exception {
-		pool.close();
+	public void close() throws IOException {
+		try {
+			pool.close();
+		} catch (Exception e) {
+			if (e instanceof IOException)
+				throw (IOException)e;
+			throw new IOException(e);
+		}
 	}
 }
