@@ -26,4 +26,9 @@ public class ReplicationSSDMStream implements SSDBStream {
 	public void callback(SSDBStreamCallback callback) {
 		master.callback(callback);
 	}
+	
+	public void close() throws Exception {
+		master.close();
+		slave.close();
+	}
 }

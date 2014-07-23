@@ -46,4 +46,8 @@ public class PoolSSDBStream implements SSDBStream {
 			throw new SSDBException(e);
 		}
 	}
+	
+	public void close() throws Exception {
+		pool.close();
+	}
 }

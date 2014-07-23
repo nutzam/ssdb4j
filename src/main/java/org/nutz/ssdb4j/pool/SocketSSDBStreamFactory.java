@@ -29,4 +29,9 @@ public class SocketSSDBStreamFactory extends BasePoolableObjectFactory<SSDBStrea
 			return false;
 		}
 	}
+	
+	@Override
+	public void destroyObject(SSDBStream obj) throws Exception {
+		obj.close();
+	}
 }

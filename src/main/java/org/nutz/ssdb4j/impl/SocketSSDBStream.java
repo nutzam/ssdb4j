@@ -46,4 +46,8 @@ public class SocketSSDBStream extends AbstractIoSSDBStream {
 			}
 		return super.whenError(e);
 	}
+	
+	public void close() throws IOException {
+		socket.close();
+	}
 }
