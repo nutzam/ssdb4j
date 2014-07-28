@@ -32,6 +32,11 @@
 			<artifactId>commons-pool</artifactId>
 			<version>1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.nutz</groupId>
+			<artifactId>nutz</artifactId>
+			<version>1.b.50</version>
+		</dependency>
 	</dependencies>
 	<description>Another Java Driver for ssdb</description>
 	<scm>

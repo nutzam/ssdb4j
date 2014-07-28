@@ -190,11 +190,19 @@ public class SSDBs {
 		return resp;
 	}
 	
+	public static void sendRedisCmd(OutputStream out, Cmd cmd, byte[] ... vals) throws IOException {
+		throw new RuntimeException();
+	}
+	
+	public static Response readRedisResp(InputStream in) throws IOException {
+		throw new RuntimeException();
+	}
+	
 	/**
 	 * 版本号
 	 * @return 版本号
 	 */
 	public static String version() {
-		return "8.6";
+		return "8.7";
 	}
 }

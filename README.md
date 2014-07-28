@@ -19,7 +19,7 @@ maven
 <dependency>
     <groupId>org.nutz</groupId>
     <artifactId>ssdb4j</artifactId>
-    <version>8.6</version>
+    <version>8.7</version>
 </dependency>
 ```
 
