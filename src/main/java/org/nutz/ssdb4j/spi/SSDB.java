@@ -1,12 +1,13 @@
 package org.nutz.ssdb4j.spi;
 
+import java.io.Closeable;
 import java.util.List;
 
 /**
  * SSDB for java 的标准接口
  * @author wendal(wendal1985@gmail.com)
  */
-public interface SSDB {
+public interface SSDB extends Closeable {
 
 	/**根据key获取一个值*/
 	Response get(Object key);
@@ -161,8 +162,7 @@ public interface SSDB {
 	/*=================================================================*/
 	/*==================一些管理方法,非ssdb指令=========================*/
 	/*=================================================================*/
-	
-//	void _depose() throws Exception;
+
 	void changeObjectConv(ObjectConv conv);
 	
 	/*=================================================================*/

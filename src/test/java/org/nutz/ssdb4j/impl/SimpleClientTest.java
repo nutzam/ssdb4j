@@ -5,17 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.nutz.ssdb4j.SSDBs;
@@ -31,21 +25,26 @@ public class SimpleClientTest {
 //		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutzam.com", 8888, 2000, null);
 //		ssdb = SSDBs.pool("nutz.cn", 8888, 2000, null);
-		ssdb = SSDBs.pool("127.0.0.1", 8889, 2000, null);
+		ssdb = SSDBs.pool("127.0.0.1", 8888, 2000, null);
 //		ssdb = SSDBs.pool("192.168.72.103", 8888, 2000, null);
 		Response resp = ssdb.flushdb("");
 		assertTrue(resp.ok());
 	}
 	
+	@After
+	public void depose() throws IOException {
+		ssdb.close();
+	}
+	
 	@Test
 	public void test_profiler() {
 		ssdb.set("abc", "1234");
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			ssdb.get("abc");
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testSimpleLua() throws Throwable {
 		ssdb.set("abc", "1");
 //		System.out.println(ssdb.get("abc").asString());
@@ -395,27 +394,51 @@ public class SimpleClientTest {
 		System.out.println((char)85);
 	}
 	
-	public static void main(String[] args) throws Exception {
-		URL url = new URL("https://github.com/ideawu/ssdb/raw/dev/src/serv.cpp");
-		InputStream in = url.openStream();
-		Reader reader = new InputStreamReader(in);
-		BufferedReader br = new BufferedReader(reader);
-		ArrayList<String> ssdb_def_opts = new ArrayList<String>();
-		while (true) {
-			String line = br.readLine();
-			if (line == null)
-				break;
-//			System.out.println(line);
-			line = line.trim();
-			if (line.startsWith("#"))
-				continue;
-			if (!line.startsWith("DEF_PROC"))
-				continue;
-			ssdb_def_opts.add(line.substring(line.indexOf('(')+1, line.indexOf(')')));
-		}
-		for (Method method : SSDB.class.getMethods()) {
-			ssdb_def_opts.remove(method.getName());
-		}
-		System.out.println(ssdb_def_opts);
-	}
+//	public static void main(String[] args) throws Exception {
+//		URL url = new URL("https://github.com/ideawu/ssdb/raw/dev/src/serv.cpp");
+//		InputStream in = url.openStream();
+//		Reader reader = new InputStreamReader(in);
+//		BufferedReader br = new BufferedReader(reader);
+//		ArrayList<String> ssdb_def_opts = new ArrayList<String>();
+//		while (true) {
+//			String line = br.readLine();
+//			if (line == null)
+//				break;
+////			System.out.println(line);
+//			line = line.trim();
+//			if (line.startsWith("#"))
+//				continue;
+//			if (!line.startsWith("DEF_PROC"))
+//				continue;
+//			ssdb_def_opts.add(line.substring(line.indexOf('(')+1, line.indexOf(')')));
+//		}
+//		for (Method method : SSDB.class.getMethods()) {
+//			ssdb_def_opts.remove(method.getName());
+//		}
+//		System.out.println(ssdb_def_opts);
+//	}
+	
+//    public static void main(String[] args) throws Throwable {
+//    	GenericObjectPool.Config config = new GenericObjectPool.Config();
+//        config.lifo = true;
+//        config.maxActive = 3;
+//        config.maxIdle = 3;
+//        config.maxWait = 1000 * 5;
+//        config.minEvictableIdleTimeMillis = 1000 * 10;
+//        config.minIdle = 3;
+//        config.numTestsPerEvictionRun = 100;
+//        config.softMinEvictableIdleTimeMillis = 1000 * 10;
+//        config.testOnBorrow = true;
+//        config.testOnReturn = true;
+//        config.testWhileIdle = true;
+//        config.timeBetweenEvictionRunsMillis = 1000 * 5;
+//        config.whenExhaustedAction = GenericObjectPool.WHEN_EXHAUSTED_BLOCK;
+//
+//        SSDB ssdb = SSDBs.pool("127.0.0.1", 8888, 1000 * 10, config);
+//
+//        Response resp = ssdb.ping();
+//        System.out.println(resp.stat);
+//
+//        Thread.sleep(Integer.MAX_VALUE);
+//    }
 }

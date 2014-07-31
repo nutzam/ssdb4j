@@ -1,5 +1,6 @@
 package org.nutz.ssdb4j.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.nutz.ssdb4j.spi.Cmd;
@@ -580,5 +581,10 @@ public class SimpleClient implements SSDB {
 	@Override
 	public Response sync140() {
 		return null;
+	}
+	
+	@Override
+	public void close() throws IOException {
+		stream.close();
 	}
 }

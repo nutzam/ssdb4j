@@ -61,6 +61,7 @@ public class SSDBs {
 	public static final SSDB pool(String host, int port, int timeout, Config config) {
 		if (config == null) {
 			config = new Config();
+			config.maxActive = 10;
 			config.testWhileIdle = true;
 		}
 		return new SimpleClient(_pool(host, port, timeout, config));
@@ -82,6 +83,7 @@ public class SSDBs {
 	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Config config) {
 		if (config == null) {
 			config = new Config();
+			config.maxActive = 10;
 			config.testWhileIdle = true;
 		}
 		PoolSSDBStream master = _pool(masterHost, masterPort, timeout, config);
@@ -203,6 +205,6 @@ public class SSDBs {
 	 * @return 版本号
 	 */
 	public static String version() {
-		return "8.7";
+		return "8.8";
 	}
 }
