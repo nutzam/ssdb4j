@@ -70,12 +70,12 @@ public interface SSDB extends Closeable {
 	Response zexists(Object key, Object zkey);
 	Response zclear(Object key);
 	
-	Response zremrangebyrank(Object key, Object zkey_start, long score_start, long score_end, int limit);
-	Response zremrangebyscore(Object key, Object zkey_start, long score_start, long score_end, int limit);
+	Response zremrangebyrank(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
+	Response zremrangebyscore(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
 	
-	Response zkeys(Object key, Object zkey_start, long score_start, long score_end, int limit);
-	Response zscan(Object key, Object zkey_start, long score_start, long score_end, int limit);
-	Response zrscan(Object key, Object zkey_start, long score_start, long score_end, int limit);
+	Response zkeys(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
+	Response zscan(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
+	Response zrscan(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
 	
 	Response zrange(Object key, int offset, int limit);
 	Response zrrange(Object key, int offset, int limit);
@@ -164,6 +164,8 @@ public interface SSDB extends Closeable {
 	/*=================================================================*/
 
 	void changeObjectConv(ObjectConv conv);
+	
+	Response req(Cmd cmd, byte[] ... values);
 	
 	/*=================================================================*/
 	/*==================内部命令?======================================*/

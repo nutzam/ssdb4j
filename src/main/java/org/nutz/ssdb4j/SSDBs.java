@@ -12,6 +12,7 @@ import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
 import org.nutz.ssdb4j.replication.ReplicationSSDMStream;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
+import org.nutz.ssdb4j.spi.ResponseFactory;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 
@@ -33,6 +34,8 @@ public class SSDBs {
 	public static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
 	public static final byte[] EMPTY_ARG = new byte[0];
+	
+	public static ResponseFactory respFactory = new ResponseFactory();
 
 	/**
 	 * 使用默认配置生成一个单连接的客户端
@@ -178,7 +181,7 @@ public class SSDBs {
 	 * @throws SSDBException 读取到非预期值的时候抛错协议错误
 	 */
 	public static Response readResp(InputStream in) throws IOException {
-		Response resp = new Response();
+		Response resp = respFactory.make();
 		byte[] data = SSDBs.readBlock(in);
 		if (data == null)
 			throw new SSDBException("protocol error. unexpect \\n");
@@ -190,14 +193,6 @@ public class SSDBs {
 			resp.datas.add(data);
 		}
 		return resp;
-	}
-	
-	public static void sendRedisCmd(OutputStream out, Cmd cmd, byte[] ... vals) throws IOException {
-		throw new RuntimeException();
-	}
-	
-	public static Response readRedisResp(InputStream in) throws IOException {
-		throw new RuntimeException();
 	}
 	
 	/**
