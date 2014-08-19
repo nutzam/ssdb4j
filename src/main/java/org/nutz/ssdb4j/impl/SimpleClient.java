@@ -341,7 +341,7 @@ public class SimpleClient implements SSDB {
 			flushdb_zset();
 		} else if ("list".equals(type)) {
 			flushdb_list();
-		}else {
+		} else {
 			throw new IllegalArgumentException("not such flushdb mode=" + type);
 		}
 		Response resp = new Response();
@@ -356,9 +356,7 @@ public class SimpleClient implements SSDB {
 			if (keys.isEmpty())
 				return count;
 			count += keys.size();
-			for (String key : keys) {
-				del(key);
-			}
+			multi_del(keys.toArray());
 		}
 	}
 	

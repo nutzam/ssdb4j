@@ -2,8 +2,8 @@ package org.nutz.ssdb4j.spi;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +62,7 @@ public class Response {
 	public Map<String, Object> map() {
 		if (datas.size() % 2 != 0)
 			throw new IllegalArgumentException("not key-value pairs");
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		Iterator<byte[]> it = datas.iterator();
 		while (it.hasNext()) {
 			map.put(_string(it.next()), it.next());
@@ -73,7 +73,7 @@ public class Response {
 	public Map<String, String> mapString() {
 		if (datas.size() % 2 != 0)
 			throw new IllegalArgumentException("not key-value pairs");
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<String, String>();
 		Iterator<byte[]> it = datas.iterator();
 		while (it.hasNext()) {
 			map.put(_string(it.next()), _string(it.next()));
