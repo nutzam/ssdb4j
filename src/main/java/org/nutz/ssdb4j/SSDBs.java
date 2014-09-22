@@ -5,10 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import org.apache.commons.pool.impl.GenericObjectPool.Config;
 import org.nutz.ssdb4j.impl.SimpleClient;
 import org.nutz.ssdb4j.pool.PoolSSDBStream;
-import org.nutz.ssdb4j.pool.SocketSSDBStreamPool;
+import org.nutz.ssdb4j.pool.Pools;
 import org.nutz.ssdb4j.replication.ReplicationSSDMStream;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
@@ -61,17 +60,12 @@ public class SSDBs {
 	 * @param timeout 超时设置
 	 * @param config 连接池配置信息,如果为空,则使用默认值
 	 */
-	public static final SSDB pool(String host, int port, int timeout, Config config) {
-		if (config == null) {
-			config = new Config();
-			config.maxActive = 10;
-			config.testWhileIdle = true;
-		}
+	public static final SSDB pool(String host, int port, int timeout, Object config) {
 		return new SimpleClient(_pool(host, port, timeout, config));
 	}
 	
-	protected static final PoolSSDBStream _pool(String host, int port, int timeout, Config config) {
-		return new PoolSSDBStream(new SocketSSDBStreamPool(host, port, timeout, config));
+	protected static final PoolSSDBStream _pool(String host, int port, int timeout, Object config) {
+		return Pools.pool(host, port, timeout, config);
 	}
 	
 	/**
@@ -83,12 +77,7 @@ public class SSDBs {
 	 * @param timeout    超时设置
 	 * @param config     连接池配置信息,如果为空,则使用默认值
 	 */
-	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Config config) {
-		if (config == null) {
-			config = new Config();
-			config.maxActive = 10;
-			config.testWhileIdle = true;
-		}
+	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Object config) {
 		PoolSSDBStream master = _pool(masterHost, masterPort, timeout, config);
 		PoolSSDBStream slave = _pool(slaveHost, slavePort, timeout, config);
 		return new SimpleClient(new ReplicationSSDMStream(master, slave));

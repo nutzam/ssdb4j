@@ -24,7 +24,6 @@ public class ReplicationSSDMStream implements SSDBStream {
 		return master.req(cmd, vals);
 	}
 
-	@Override
 	public void callback(SSDBStreamCallback callback) {
 		master.callback(callback);
 	}

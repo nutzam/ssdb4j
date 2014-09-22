@@ -102,6 +102,19 @@ public class Cmd {
 	public static final Cmd clear_binlog     =  new Cmd("clear_binlog"   , false, false);
 
 
+    public static final Cmd getbit = new Cmd("getbit", false, false);
+    public static final Cmd setbit = new Cmd("setbit", false, false);
+    public static final Cmd countbit = new Cmd("countbit", false, false);
+    public static final Cmd substr = new Cmd("substr", false, false);
+    public static final Cmd getrange = new Cmd("getrange", false, false);
+    public static final Cmd strlen = new Cmd("strlen", false, false);
+    public static final Cmd redis_bitcount = new Cmd("redis_bitcount", false, false);
+    public static final Cmd hrlist = new Cmd("hrlist", false, false);
+    public static final Cmd zrlist = new Cmd("zrlist", false, false);
+    public static final Cmd qrlist = new Cmd("qrlist", false, false);
+    public static final Cmd auth = new Cmd("auth", false, false);
+
+	
 	protected String name;
 	protected byte[] bytes;
 	protected boolean slave;

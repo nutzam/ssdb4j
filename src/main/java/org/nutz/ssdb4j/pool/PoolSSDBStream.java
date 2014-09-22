@@ -35,7 +35,6 @@ public class PoolSSDBStream implements SSDBStream {
 		}
 	}
 
-	@Override
 	public void callback(SSDBStreamCallback callback) {
 		try {
 			SSDBStream steam = pool.borrowObject();

@@ -38,7 +38,6 @@ public abstract class AbstractIoSSDBStream implements SSDBStream {
 		throw new SSDBException(e);
 	}
 	
-	@Override
 	public void callback(SSDBStreamCallback callback) {
 		beforeExec();
 		try {

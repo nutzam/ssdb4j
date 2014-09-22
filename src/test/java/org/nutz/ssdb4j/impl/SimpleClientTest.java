@@ -5,7 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.nutz.ssdb4j.SSDBs;
+import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 
@@ -394,29 +402,35 @@ public class SimpleClientTest {
 		System.out.println((char)85);
 	}
 	
-//	public static void main(String[] args) throws Exception {
-//		URL url = new URL("https://github.com/ideawu/ssdb/raw/dev/src/serv.cpp");
-//		InputStream in = url.openStream();
-//		Reader reader = new InputStreamReader(in);
-//		BufferedReader br = new BufferedReader(reader);
-//		ArrayList<String> ssdb_def_opts = new ArrayList<String>();
-//		while (true) {
-//			String line = br.readLine();
-//			if (line == null)
-//				break;
-////			System.out.println(line);
-//			line = line.trim();
-//			if (line.startsWith("#"))
-//				continue;
-//			if (!line.startsWith("DEF_PROC"))
-//				continue;
-//			ssdb_def_opts.add(line.substring(line.indexOf('(')+1, line.indexOf(')')));
-//		}
-//		for (Method method : SSDB.class.getMethods()) {
-//			ssdb_def_opts.remove(method.getName());
-//		}
-//		System.out.println(ssdb_def_opts);
-//	}
+	public static void main(String[] args) throws Exception {
+		URL url = new URL("https://github.com/ideawu/ssdb/raw/dev/src/serv.cpp");
+		InputStream in = url.openStream();
+		Reader reader = new InputStreamReader(in);
+		BufferedReader br = new BufferedReader(reader);
+		ArrayList<String> ssdb_def_opts = new ArrayList<String>();
+		while (true) {
+			String line = br.readLine();
+			if (line == null)
+				break;
+//			System.out.println(line);
+			line = line.trim();
+			if (line.startsWith("#"))
+				continue;
+			if (!line.startsWith("DEF_PROC"))
+				continue;
+			ssdb_def_opts.add(line.substring(line.indexOf('(')+1, line.indexOf(')')));
+		}
+		for (Method method : SSDB.class.getMethods()) {
+			ssdb_def_opts.remove(method.getName());
+		}
+		System.out.println(ssdb_def_opts);
+		for (String name : ssdb_def_opts) {
+            System.out.printf("    Response %s();\n", name);
+        }
+		for (String name : ssdb_def_opts) {
+            System.out.printf("    public static final Cmd %s = new Cmd(\"%s\", false, false);\n", name, name);
+        }
+	}
 	
 //    public static void main(String[] args) throws Throwable {
 //    	GenericObjectPool.Config config = new GenericObjectPool.Config();

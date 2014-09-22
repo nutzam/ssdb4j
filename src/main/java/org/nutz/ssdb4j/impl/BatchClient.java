@@ -56,7 +56,6 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback, Run
 		return resps;
 	}
 	
-	@Override
 	public void invoke(InputStream in, OutputStream out) {
 		_in = in;
 		new Thread(this).start();
@@ -79,7 +78,6 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback, Run
 		}
 	}
 	
-	@Override
 	public void run() {
 		try {
 			for (int i = 0; i < count; i++) {

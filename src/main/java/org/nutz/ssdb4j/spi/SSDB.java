@@ -158,6 +158,26 @@ public interface SSDB extends Closeable {
 	Response key_range();
 	Response compact();
 	
+	/*=================================================================*/
+    /*==================add at 1.6.8.8=================================*/
+    /*=================================================================*/
+    Response getbit(Object key, int offset);
+    Response setbit(Object key, int offset, byte on);
+    Response countbit(Object key, int start, int size);
+    Response substr(Object key, int start, int size);
+    Response getrange(Object key, int start, int size);
+    Response strlen(Object key);
+    Response redis_bitcount(Object key, int start, int size);
+    Response hrlist(Object key, Object hkey, int limit);
+    Response zrlist(Object zkey_start, Object zkey_end, int limit);
+    Response qrlist(Object key_start, Object key_end, int limit);
+    
+    /*=================================================================*/
+    /*==================add at 1.7.0=================================*/
+    /*=================================================================*/
+    
+    Response auth(String passwd);
+	
 	
 	/*=================================================================*/
 	/*==================一些管理方法,非ssdb指令=========================*/
