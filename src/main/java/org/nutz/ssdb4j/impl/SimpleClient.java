@@ -2,6 +2,7 @@ package org.nutz.ssdb4j.impl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.ObjectConv;
@@ -49,7 +50,11 @@ public class SimpleClient implements SSDB {
 	}
 
 	public SSDB batch() {
-		return new BatchClient(stream);
+		return new BatchClient(stream, 60, TimeUnit.SECONDS);
+	}
+	
+	public SSDB batch(int timeout, TimeUnit timeUnit) {
+	    return new BatchClient(stream, timeout, timeUnit);
 	}
 
 	public List<Response> exec() {
