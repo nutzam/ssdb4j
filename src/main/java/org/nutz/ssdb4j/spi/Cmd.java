@@ -114,6 +114,8 @@ public class Cmd {
     public static final Cmd qrlist = new Cmd("qrlist", false, false);
     public static final Cmd auth = new Cmd("auth", false, false);
 
+    public static final Cmd qtrim_front = new Cmd("qtrim_front", false, false);
+    public static final Cmd qtrim_back = new Cmd("qtrim_back", false, false);
 	
 	protected String name;
 	protected byte[] bytes;

@@ -177,6 +177,8 @@ public interface SSDB extends Closeable {
     /*=================================================================*/
     
     Response auth(String passwd);
+    Response qtrim_front(Object key, int size);
+    Response qtrim_back(Object key, int size);
 	
 	
 	/*=================================================================*/

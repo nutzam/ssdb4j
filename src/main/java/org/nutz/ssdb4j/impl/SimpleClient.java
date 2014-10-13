@@ -633,4 +633,12 @@ public class SimpleClient implements SSDB {
     public Response auth(String passwd) {
         return req(Cmd.auth, bytes(passwd));
     }
+    
+    public Response qtrim_back(Object key, int size) {
+        return req(Cmd.qtrim_back, bytes(key), Integer.toString(size).getBytes());
+    }
+    
+    public Response qtrim_front(Object key, int size) {
+        return req(Cmd.qtrim_front, bytes(key), Integer.toString(size).getBytes());
+    }
 }
