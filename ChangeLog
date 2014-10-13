@@ -1,4 +1,10 @@
 
+9.0
+------------------
+
+add: qtrim_front qtrim_trim auth
+change: rewrite batch client
+
 8.6
 ---------------
 
