@@ -70,8 +70,8 @@ public interface SSDB extends Closeable {
 	Response zexists(Object key, Object zkey);
 	Response zclear(Object key);
 	
-	Response zremrangebyrank(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
-	Response zremrangebyscore(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
+	Response zremrangebyrank(Object key, Object score_start, Object score_end);
+	Response zremrangebyscore(Object key, Object score_start, Object score_end);
 	
 	Response zkeys(Object key, Object zkey_start, Object score_start, Object score_end, int limit);
 	Response zscan(Object key, Object zkey_start, Object score_start, Object score_end, int limit);

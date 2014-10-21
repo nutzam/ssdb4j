@@ -504,13 +504,13 @@ public class SimpleClient implements SSDB {
 	}
 	
 	
-	public Response zremrangebyrank(Object key, Object zkey_start, Object score_start, Object score_end, int limit) {
-		return req(Cmd.zremrangebyrank, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	public Response zremrangebyrank(Object key, Object score_start, Object score_end) {
+		return req(Cmd.zremrangebyrank, bytes(key), bytes(score_start), bytes(score_end));
 	}
 	
 	
-	public Response zremrangebyscore(Object key, Object zkey_start, Object score_start, Object score_end, int limit) {
-		return req(Cmd.zremrangebyscore, bytes(key), bytes(zkey_start), bytes(score_start), bytes(score_end), Integer.toString(limit).getBytes());
+	public Response zremrangebyscore(Object key, Object score_start, Object score_end) {
+		return req(Cmd.zremrangebyscore, bytes(key), bytes(score_start), bytes(score_end));
 	}
 	
 	
