@@ -71,7 +71,6 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback {
                 for (int i = 0; i < count; i++) {
                     resps.add(SSDBs.readResp(in));
                 }
-                System.out.println("read done");
                 return null;
             }
         });
@@ -85,7 +84,6 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback {
                     out.write('\n');
                 }
                 out.flush();
-                System.out.println("send done");
                 return null;
             }
         });

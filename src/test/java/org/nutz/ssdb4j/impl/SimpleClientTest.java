@@ -188,7 +188,13 @@ public class SimpleClientTest {
 	}
 
 	@Test
-	public void test_batch() {
+	public void test_batch() throws InterruptedException {
+	    Thread.sleep(30*1000);
+	    System.out.println(System.currentTimeMillis());
+	    for (int i = 0; i < 1000; i++) {
+            ssdb.set("aaa" + i, i);
+        }
+	    System.out.println(System.currentTimeMillis());
 		SSDB ssdb = this.ssdb.batch();
 		for (int i = 0; i < 1000; i++) {
 			ssdb.set("aaa" + i, i);
@@ -200,6 +206,7 @@ public class SimpleClientTest {
 		for (Response resp : resps) {
 			assertTrue(resp.ok());
 		}
+		Thread.sleep(30*1000);
 	}
 
 	@Test
