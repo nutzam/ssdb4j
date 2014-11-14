@@ -8,8 +8,12 @@ import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.SSDBStream;
 
 public class Pools {
-
+    
     public static PoolSSDBStream pool(final String host, final int port, final int timeout, Object cnf) {
+        return pool(host, port, timeout, cnf, null);
+    }
+
+    public static PoolSSDBStream pool(final String host, final int port, final int timeout, Object cnf, final byte[] auth) {
         if (cnf == null) {
             Config config = new Config();
             config.maxActive = 10;
@@ -19,7 +23,7 @@ public class Pools {
         return new PoolSSDBStream(new GenericObjectPool<SSDBStream>(new BasePoolableObjectFactory<SSDBStream>() {
             
             public SSDBStream makeObject() throws Exception {
-                return new SocketSSDBStream(host, port, timeout);
+                return new SocketSSDBStream(host, port, timeout, auth);
             }
 
             public boolean validateObject(SSDBStream stream) {

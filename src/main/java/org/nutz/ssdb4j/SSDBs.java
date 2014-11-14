@@ -61,11 +61,23 @@ public class SSDBs {
 	 * @param config 连接池配置信息,如果为空,则使用默认值
 	 */
 	public static final SSDB pool(String host, int port, int timeout, Object config) {
-		return new SimpleClient(_pool(host, port, timeout, config));
+		return pool(host, port, timeout, config, null);
 	}
 	
-	protected static final PoolSSDBStream _pool(String host, int port, int timeout, Object config) {
-		return Pools.pool(host, port, timeout, config);
+	/**
+     * 指定配置生成一个使用连接池的客户端
+     * @param host 主机名
+     * @param port 端口
+     * @param timeout 超时设置
+     * @param config 连接池配置信息,如果为空,则使用默认值
+     * @param auth 鉴权信息
+     */
+    public static final SSDB pool(String host, int port, int timeout, Object config, byte[] auth) {
+        return new SimpleClient(_pool(host, port, timeout, config, auth));
+    }
+	
+	protected static final PoolSSDBStream _pool(String host, int port, int timeout, Object config, byte[] auth) {
+		return Pools.pool(host, port, timeout, config, auth);
 	}
 	
 	/**
@@ -78,10 +90,26 @@ public class SSDBs {
 	 * @param config     连接池配置信息,如果为空,则使用默认值
 	 */
 	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Object config) {
-		PoolSSDBStream master = _pool(masterHost, masterPort, timeout, config);
-		PoolSSDBStream slave = _pool(slaveHost, slavePort, timeout, config);
-		return new SimpleClient(new ReplicationSSDMStream(master, slave));
+		return replication(masterHost, masterPort, slaveHost, slavePort, timeout, config, null, null);
 	}
+	
+
+    /**
+     * 按指定配置生成master/slave且使用连接池的客户端
+     * @param masterHost 主服务器的主机名
+     * @param masterPort 主服务器的端口
+     * @param slaveHost  从服务器的主机名
+     * @param slavePort  从服务器的端口
+     * @param timeout    超时设置
+     * @param config     连接池配置信息,如果为空,则使用默认值
+     * @param masterAuth 主服务器的鉴权信息
+     * @param slaveAuth  副服务器的鉴权信息
+     */
+	public static final SSDB replication(String masterHost, int masterPort, String slaveHost, int slavePort, int timeout, Object config, byte[] masterAuth, byte[] slaveAuth) {
+        PoolSSDBStream master = _pool(masterHost, masterPort, timeout, config, masterAuth);
+        PoolSSDBStream slave = _pool(slaveHost, slavePort, timeout, config, slaveAuth);
+        return new SimpleClient(new ReplicationSSDMStream(master, slave));
+    }
 	
 	/**
 	 * 

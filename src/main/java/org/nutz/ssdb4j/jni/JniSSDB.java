@@ -2,7 +2,6 @@ package org.nutz.ssdb4j.jni;
 
 import java.io.IOException;
 
-import org.nutz.ssdb4j.impl.SimpleClient;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBStream;
@@ -53,9 +52,4 @@ public class JniSSDB implements SSDBStream {
 	protected native int _init(String cnf);
 	protected native byte[][] _req(byte[] cmd, byte[]... vals);
 	protected native int _close();
-	
-	public static void main(String[] args) {
-		SimpleClient ssdb = new SimpleClient(new JniSSDB(args[0]));
-		ssdb.set("abc", "zzz").check();
-	}
 }
