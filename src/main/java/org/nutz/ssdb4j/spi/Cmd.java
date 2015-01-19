@@ -116,6 +116,11 @@ public class Cmd {
 
     public static final Cmd qtrim_front = new Cmd("qtrim_front", false, false);
     public static final Cmd qtrim_back = new Cmd("qtrim_back", false, false);
+    
+    public static final Cmd qset = new Cmd("qset", false, false);
+    public static final Cmd dbsize = new Cmd("dbsize", false, false);
+    public static final Cmd get_key_range = new Cmd("get_key_range", false, false);
+    public static final Cmd set_key_range = new Cmd("set_key_range", false, false);
 	
 	protected String name;
 	protected byte[] bytes;

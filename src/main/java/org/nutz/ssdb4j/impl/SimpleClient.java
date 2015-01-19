@@ -641,4 +641,29 @@ public class SimpleClient implements SSDB {
     public Response qtrim_front(Object key, int size) {
         return req(Cmd.qtrim_front, bytes(key), Integer.toString(size).getBytes());
     }
+    
+    //-----------------------------------
+    public Response dbsize() {
+        return req(Cmd.dbsize);
+    }
+    
+    public Response qset(Object key, int index, Object value) {
+        return req(Cmd.qset, bytes(key), Integer.toString(index).getBytes(), bytes(value));
+    }
+    
+    public Response get_key_range() {
+        return req(Cmd.get_key_range);
+    }
+    
+    public Response set_key_range(Object start, Object end) {
+        return req(Cmd.set_key_range, bytes(start), bytes(end));
+    }
+    
+    public Response qpop_back(Object key, int limit) {
+        return req(Cmd.qpop_back, bytes(key), Integer.toString(limit).getBytes());
+    }
+    
+    public Response qpop_front(Object key, int limit) {
+        return req(Cmd.qpop_front, bytes(key), Integer.toString(limit).getBytes());
+    }
 }

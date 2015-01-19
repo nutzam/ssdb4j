@@ -96,6 +96,8 @@ public interface SSDB extends Closeable {
 	Response qpop(Object key);
 	Response qpop_front(Object key);
 	Response qpop_back(Object key);
+    Response qpop_front(Object key, int limit);
+    Response qpop_back(Object key, int limit);
 	Response qfix(Object key);
 	Response qlist(Object key_start, Object key_end, int limit);
 	Response qclear(Object key);
@@ -180,6 +182,13 @@ public interface SSDB extends Closeable {
     Response qtrim_front(Object key, int size);
     Response qtrim_back(Object key, int size);
 	
+    /*add at 1.8.0*/
+    Response qset(Object key, int index, Object value);
+    Response dbsize();
+    
+    /*will add at 1.9 ?*/
+    Response get_key_range();
+    Response set_key_range(Object start, Object end);
 	
 	/*=================================================================*/
 	/*==================一些管理方法,非ssdb指令=========================*/
