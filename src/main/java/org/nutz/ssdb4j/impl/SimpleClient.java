@@ -652,11 +652,15 @@ public class SimpleClient implements SSDB {
     }
     
     public Response get_key_range() {
-        return req(Cmd.get_key_range);
+        return get_kv_range();
     }
     
-    public Response set_key_range(Object start, Object end) {
-        return req(Cmd.set_key_range, bytes(start), bytes(end));
+    public Response get_kv_range() {
+        return req(Cmd.get_kv_range);
+    }
+    
+    public Response set_kv_range(Object start, Object end) {
+        return req(Cmd.set_kv_range, bytes(start), bytes(end));
     }
     
     public Response qpop_back(Object key, int limit) {
@@ -665,5 +669,19 @@ public class SimpleClient implements SSDB {
     
     public Response qpop_front(Object key, int limit) {
         return req(Cmd.qpop_front, bytes(key), Integer.toString(limit).getBytes());
+    }
+    
+    //------------------------
+    
+    public Response version() {
+        return req(Cmd.version);
+    }
+    
+    public Response rkeys(Object start, Object end, int limit) {
+        return req(Cmd.rkeys,bytes(start), bytes(end), Integer.toString(limit).getBytes());
+    }
+    
+    public Response ignore_key_range() {
+        return req(Cmd.ignore_key_range);
     }
 }

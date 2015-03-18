@@ -119,8 +119,14 @@ public class Cmd {
     
     public static final Cmd qset = new Cmd("qset", false, false);
     public static final Cmd dbsize = new Cmd("dbsize", false, false);
-    public static final Cmd get_key_range = new Cmd("get_key_range", false, false);
-    public static final Cmd set_key_range = new Cmd("set_key_range", false, false);
+//    public static final Cmd get_key_range = new Cmd("get_key_range", false, false);
+//    public static final Cmd set_key_range = new Cmd("set_key_range", false, false);
+    
+    public static final Cmd rkeys = new Cmd("rkeys", false, false);
+    public static final Cmd version = new Cmd("version", false, false);
+    public static final Cmd get_kv_range = new Cmd("get_kv_range", false, false);
+    public static final Cmd set_kv_range = new Cmd("set_kv_range", false, false);
+    public static final Cmd ignore_key_range = new Cmd("ignore_key_range", false, false);
 	
 	protected String name;
 	protected byte[] bytes;

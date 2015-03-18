@@ -187,8 +187,13 @@ public interface SSDB extends Closeable {
     Response dbsize();
     
     /*will add at 1.9 ?*/
+    @Deprecated
     Response get_key_range();
-    Response set_key_range(Object start, Object end);
+    Response get_kv_range();
+    Response set_kv_range(Object start, Object end);
+    Response ignore_key_range();
+    Response version();
+    Response rkeys(Object start, Object end, int limit);
 	
 	/*=================================================================*/
 	/*==================一些管理方法,非ssdb指令=========================*/
