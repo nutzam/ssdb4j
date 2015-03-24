@@ -1,21 +1,16 @@
 package org.nutz.ssdb4j.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.nutz.ssdb4j.SSDBs;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.SSDBException;
 import org.nutz.ssdb4j.spi.SSDBStream;
-import org.nutz.ssdb4j.spi.SSDBStreamCallback;
 
-public class BatchClient extends SimpleClient implements SSDBStreamCallback {
+public class BatchClient extends SimpleClient {
 
     protected static Response OK = new Response();
     static {
@@ -24,11 +19,7 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback {
 
     protected List<_Req> reqs;
 
-    protected Object respLock = new Object();
-
-    protected int count;
-
-    protected List<Response> resps;
+    protected List<Response> resps = new ArrayList<Response>();
     
     protected int timeout;
     
@@ -54,32 +45,15 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback {
     public synchronized List<Response> exec() {
         if (reqs == null)
             throw new SSDBException("this BatchClient is invaild!");
-        count = reqs.size();
-        stream.callback(this);
+        for (_Req req : reqs) {
+            this.resps.add(stream.req(req.cmd, req.vals));
+        }
         List<Response> resps = this.resps;
         this.resps = null;
+        this.reqs = null;
         return resps;
     }
-
-    public void invoke(final InputStream in, final OutputStream out) {
-        try {
-            for (_Req req : reqs) {
-                SSDBs.writeBlock(out, req.cmd.bytes());
-                for (byte[] bs : req.vals) {
-                    SSDBs.writeBlock(out, bs);
-                }
-                out.write('\n');
-            }
-            out.flush();
-            for (int i = 0; i < count; i++) {
-                resps.add(SSDBs.readResp(in));
-            }
-        }
-        catch (IOException e) {
-            throw new SSDBException(e);
-        }
-    }
-
+    
     public SSDB batch() {
         throw new SSDBException("aready in batch mode, not support for batch again");
     }
