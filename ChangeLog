@@ -1,4 +1,10 @@
 
+9.3
+-----------------------------------
+fix: qpop_front qpop_back 有可选参数limit
+add: dbsize
+add: set_key_range get_key_range
+
 9.1
 -------------------
 fix: zremrangebyrank zremrangebyscore 参数错误

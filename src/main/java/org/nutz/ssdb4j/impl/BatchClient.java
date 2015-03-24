@@ -1,14 +1,11 @@
 package org.nutz.ssdb4j.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.nutz.ssdb4j.SSDBs;
 import org.nutz.ssdb4j.spi.Cmd;
@@ -65,40 +62,21 @@ public class BatchClient extends SimpleClient implements SSDBStreamCallback {
     }
 
     public void invoke(final InputStream in, final OutputStream out) {
-        ExecutorService es = Executors.newFixedThreadPool(2);
-        es.submit(new Callable<Object>() {
-            public Object call() throws Exception {
-                for (int i = 0; i < count; i++) {
-                    resps.add(SSDBs.readResp(in));
-                }
-                return null;
-            }
-        });
-        es.submit(new Callable<Object>() {
-            public Object call() throws Exception {
-                for (_Req req : reqs) {
-                    SSDBs.writeBlock(out, req.cmd.bytes());
-                    for (byte[] bs : req.vals) {
-                        SSDBs.writeBlock(out, bs);
-                    }
-                    out.write('\n');
-                }
-                out.flush();
-                return null;
-            }
-        });
         try {
-            es.shutdown();
-            boolean flag = es.awaitTermination(timeout, timeUnit);
-            reqs = null;
-            if (!flag)
-                throw new RuntimeException(new TimeoutException("batch execute timeout!"));
+            for (_Req req : reqs) {
+                SSDBs.writeBlock(out, req.cmd.bytes());
+                for (byte[] bs : req.vals) {
+                    SSDBs.writeBlock(out, bs);
+                }
+                out.write('\n');
+            }
+            out.flush();
+            for (int i = 0; i < count; i++) {
+                resps.add(SSDBs.readResp(in));
+            }
         }
-        catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            es.shutdownNow();
+        catch (IOException e) {
+            throw new SSDBException(e);
         }
     }
 
