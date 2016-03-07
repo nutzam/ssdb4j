@@ -85,7 +85,7 @@ public class Cmd {
 	public static final Cmd multi_hsize      =  new Cmd("multi_hsize"    , false, false);
 	public static final Cmd zdecr            =  new Cmd("zdecr"          , false, false);
 	public static final Cmd zremrangebyrank  =  new Cmd("zremrangebyrank", false, false);
-	public static final Cmd zremrangebyscore =  new Cmd("zremrangebyscor", false, false);
+	public static final Cmd zremrangebyscore =  new Cmd("zremrangebyscore", false, false);
 	public static final Cmd multi_zexists    =  new Cmd("multi_zexists"  , false, false);
 	public static final Cmd multi_zsize      =  new Cmd("multi_zsize"    , false, false);
 	public static final Cmd qpush_front      =  new Cmd("qpush_front"    , false, false);
