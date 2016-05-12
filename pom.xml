@@ -4,7 +4,7 @@
 
 	<groupId>org.nutz</groupId>
 	<artifactId>ssdb4j</artifactId>
-	<version>9.3</version>
+	<version>9.4</version>
 	<packaging>jar</packaging>
 	<licenses>
 		<license>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.nutz</groupId>
 			<artifactId>nutz</artifactId>
-			<version>1.b.50</version>
+			<version>1.r.56</version>
 		</dependency>
 	</dependencies>
 	<description>Another Java Driver for ssdb</description>
@@ -97,4 +97,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>sonatype-release-staging</id>
+			<name>Sonatype Nexus release repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
 </project>
