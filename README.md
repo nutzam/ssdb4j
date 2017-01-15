@@ -15,7 +15,7 @@ BSD 3-Clause License
 maven
 -----------------
 
-```
+```xml
 <dependency>
     <groupId>org.nutz</groupId>
     <artifactId>ssdb4j</artifactId>
@@ -31,7 +31,7 @@ Apache Common Pool 1.6 http://commons.apache.org/proper/commons-pool/download_po
 最简单用法
 ----------------
 
-```
+```java
 import org.nutz.ssdb4j.spi.SSDB;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.SSDBs;
