@@ -2,7 +2,7 @@ package org.nutz.ssdb4j.pool;
 
 import java.io.IOException;
 
-import org.apache.commons.pool.ObjectPool;
+import org.apache.commons.pool2.ObjectPool;
 import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDBException;
