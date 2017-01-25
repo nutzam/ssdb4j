@@ -371,12 +371,22 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQfront() {
-//		fail("Not yet implemented");
+		Response resp = ssdb.qpush_front("qfront", "a", "b", "c");
+		assertTrue(resp.ok());
+
+		assertEquals("c", ssdb.qpop("qfront").asString());
+		assertEquals("b", ssdb.qpop("qfront").asString());
+		assertEquals("a", ssdb.qpop("qfront").asString());
 	}
 
 	@Test
 	public void testQback() {
-//		fail("Not yet implemented");
+		Response resp = ssdb.qpush_back("qback", "a", "b", "c");
+		assertTrue(resp.ok());
+
+		assertEquals("a", ssdb.qpop("qback").asString());
+		assertEquals("b", ssdb.qpop("qback").asString());
+		assertEquals("c", ssdb.qpop("qback").asString());
 	}
 
 	@Test
@@ -388,12 +398,16 @@ public class SimpleClientTest {
 		resp = ssdb.qpush("q1", 7);
 		resp = ssdb.qpush("q1", 2);
 		resp = ssdb.qpush("q1", 1);
+		resp = ssdb.qpush("q1", "a", "b", "c");
 
 		assertEquals(123, ssdb.qpop("q1").asInt());
 		assertEquals(4, ssdb.qpop("q1").asInt());
 		assertEquals(7, ssdb.qpop("q1").asInt());
 		assertEquals(2, ssdb.qpop("q1").asInt());
 		assertEquals(1, ssdb.qpop("q1").asInt());
+		assertEquals("a", ssdb.qpop("q1").asString());
+		assertEquals("b", ssdb.qpop("q1").asString());
+		assertEquals("c", ssdb.qpop("q1").asString());
 	}
 
 	@Test

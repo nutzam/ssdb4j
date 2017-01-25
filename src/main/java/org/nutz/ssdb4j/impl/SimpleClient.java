@@ -239,8 +239,8 @@ public class SimpleClient implements SSDB {
 	}
 
 	
-	public Response qpush(Object key, Object value) {
-		return req(Cmd.qpush, bytes(key), bytes(value));
+	public Response qpush(Object key, Object... values) {
+		return req(Cmd.qpush, bytes(key), bytess(values));
 	}
 
 	
@@ -524,13 +524,13 @@ public class SimpleClient implements SSDB {
 	}
 	
 	
-	public Response qpush_back(Object key, Object value) {
-		return req(Cmd.qpush_back, bytes(key), bytes(value));
+	public Response qpush_back(Object key, Object... values) {
+		return req(Cmd.qpush_back, bytes(key), bytess(values));
 	}
 	
 	
-	public Response qpush_front(Object key, Object value) {
-		return req(Cmd.qpush_front, bytes(key), bytes(value));
+	public Response qpush_front(Object key, Object... values) {
+		return req(Cmd.qpush_front, bytes(key), bytess(values));
 	}
 	
 	
