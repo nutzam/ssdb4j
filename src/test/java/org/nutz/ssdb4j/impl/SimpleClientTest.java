@@ -20,7 +20,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.nutz.ssdb4j.SSDBs;
-import org.nutz.ssdb4j.spi.Cmd;
 import org.nutz.ssdb4j.spi.Response;
 import org.nutz.ssdb4j.spi.SSDB;
 
@@ -72,19 +71,19 @@ public class SimpleClientTest {
 //		Respose resp = ssdb.lua("demo-lua", "0", "abc");
 //		System.out.println(resp.listString());
 ////		assertEquals(100000000, resp.check().asInt());
-		
-		ssdb.eval("ssdb.ping()");
-		
+		//
+		//ssdb.eval("ssdb.ping()");
+		//
 //		ssdb.set("demo-lua", "return ssdb.get(ARGV[1]).values[1];");
 //		ExecutorService es = Executors.newFixedThreadPool(128);
-		ssdb.eval("return ssdb.get(ARGV[1]).values[1];", "0", "abc").check();
-		for (int i = 0; i < 10000; i++) {
-			ssdb.evalsha("4906c10054a9c30fd8be0d0696b62964d5393541", "0", "abc").check();
-		}
-		ssdb.eval("ssdb.set(ARGV[1], 'VVV')", "0", "abc");
-		assertEquals("VVV", ssdb.evalsha("4906c10054a9c30fd8be0d0696b62964d5393541", "0", "abc").check().asString());
-		
-		assertEquals("VVV", ssdb.eval("return redis.call('get', 'abc')", "0").check().asString());
+		//ssdb.eval("return ssdb.get(ARGV[1]).values[1];", "0", "abc").check();
+		//for (int i = 0; i < 10000; i++) {
+		//	ssdb.evalsha("4906c10054a9c30fd8be0d0696b62964d5393541", "0", "abc").check();
+		//}
+		//ssdb.eval("ssdb.set(ARGV[1], 'VVV')", "0", "abc");
+		//assertEquals("VVV", ssdb.evalsha("4906c10054a9c30fd8be0d0696b62964d5393541", "0", "abc").check().asString());
+		//
+		//assertEquals("VVV", ssdb.eval("return redis.call('get', 'abc')", "0").check().asString());
 		
 //		es.awaitTermination(1, TimeUnit.MINUTES);
 	}
@@ -189,7 +188,6 @@ public class SimpleClientTest {
 
 	@Test
 	public void test_batch() throws InterruptedException {
-	    Thread.sleep(30*1000);
 	    System.out.println(System.currentTimeMillis());
 	    for (int i = 0; i < 1000; i++) {
             ssdb.set("aaa" + i, i);
@@ -206,7 +204,6 @@ public class SimpleClientTest {
 		for (Response resp : resps) {
 			assertTrue(resp.ok());
 		}
-		Thread.sleep(30*1000);
 	}
 
 	@Test
@@ -253,6 +250,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZget() {
+        ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		Response resp = ssdb.zget("wendal", "net");
 		assertTrue(resp.ok());
@@ -261,6 +259,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZdel() {
+        ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		Response resp = ssdb.zdel("wendal", "net");
 		assertTrue(resp.ok());
@@ -270,6 +269,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZincr() {
+        ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		Response resp = ssdb.zincr("wendal", "net", 10);
 		assertTrue(resp.ok());
@@ -278,6 +278,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZsize() {
+	    ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		ssdb.zset("wendal", "net2", 1);
 		ssdb.zset("wendal", "ne3", 1);
@@ -289,6 +290,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZrank() {
+        ssdb.zclear("wendal");
 		for (int i = 0; i < 100; i++) {
 			ssdb.zset("wendal", "net-"+i, i + 100);
 		}
@@ -302,6 +304,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZrrank() {
+        ssdb.zclear("wendal");
 		for (int i = 0; i < 100; i++) {
 			ssdb.zset("wendal", "net-"+i, i + 100);
 		}
@@ -315,8 +318,9 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZrange() {
+        ssdb.zclear("wendal");
 		for (int i = 0; i < 100; i++) {
-			ssdb.zset("wendal", "net-"+i, i + 100);
+			ssdb.zset("wendal", "net-"+i, i + 100).check();
 		}
 		Response resp = ssdb.zsize("wendal");
 		assertTrue(resp.ok());
@@ -328,8 +332,9 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZrrange() {
+        ssdb.zclear("wendal");
 		for (int i = 0; i < 100; i++) {
-			ssdb.zset("wendal", "net-"+i, i + 100);
+			ssdb.zset("wendal", "net-"+i, i + 100).check();
 		}
 		Response resp = ssdb.zsize("wendal");
 		assertTrue(resp.ok());
@@ -341,6 +346,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZscan() {
+        ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		ssdb.zset("wendal", "net2", 3);
 		ssdb.zset("wendal", "net3", 4);
@@ -351,6 +357,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testZrscan() {
+        ssdb.zclear("wendal");
 		ssdb.zset("wendal", "net", 1);
 		ssdb.zset("wendal", "net2", 3);
 		ssdb.zset("wendal", "net3", 4);
@@ -361,6 +368,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQsize() {
+	    ssdb.qclear("qwendal");
 		Response resp = ssdb.qpush("qwendal", 1);
 		assertTrue(resp.ok());
 		assertEquals(1, resp.asInt());
@@ -371,6 +379,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQfront() {
+        ssdb.qclear("qfront");
 		Response resp = ssdb.qpush_front("qfront", "a", "b", "c");
 		assertTrue(resp.ok());
 
@@ -381,6 +390,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQback() {
+        ssdb.qclear("qback");
 		Response resp = ssdb.qpush_back("qback", "a", "b", "c");
 		assertTrue(resp.ok());
 
@@ -391,6 +401,7 @@ public class SimpleClientTest {
 
 	@Test
 	public void testQpush() {
+        ssdb.qclear("q1");
 		Response resp = ssdb.qpush("q1", 123);
 		assertTrue(resp.ok());
 		assertEquals(1, resp.asInt());

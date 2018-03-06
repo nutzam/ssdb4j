@@ -1,4 +1,10 @@
 
+10.0
+-----------------------------------
+change: 改为common pool2
+fix: 遗留的各种小bug清理一下
+remove: 删除未完成的JniSSDBStream类
+
 9.3
 -----------------------------------
 fix: qpop_front qpop_back 有可选参数limit
